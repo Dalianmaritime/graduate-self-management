@@ -226,7 +226,7 @@ python3 -m http.server 8000
 | 交付形态 | 单文件 HTML（约 4.0 MB） | 双击即用，可直接发给同学或存档 |
 | 样式 | Tailwind Play CDN（运行时 JIT） | 任意值类如 `shadow-[...]` 随手可用，无需构建链 |
 | 设计令牌 | 手写 `<style id="design-system">` | 与运行时 utility 分层，改一处即可全局生效 |
-| 图表 | Chart.js 4.4.8 | 内嵌 UMD 构建，离线可用 |
+| 图表 | Chart.js 4.4.8（7 个实例） | 内嵌 UMD 构建，离线可用 |
 | 图标 | Font Awesome 4.7.0 | 内嵌字体文件，离线可用 |
 | 主题背景 | 内嵌 base64 PNG | 离线可用；代价是文件体积（占约 2.3 MB） |
 | 存储 | localStorage（22 个键） | 无后端、零配置 |
@@ -236,8 +236,8 @@ python3 -m http.server 8000
 
 - **统计口径统一**：新增 `getStatsRangeDates()` / `getStatsRangeLabel()`，
   模块级 `statsPeriod` 统一驱动图表与汇总卡；切换区块时不再重置为「本周」。
-- **图表不重建**：六个图表函数改为「已存在则原地 `update()`」，
-  避免每次切页重播入场动画。
+- **图表不重建**：7 个图表实例（工作 / 休息 / 咖啡 / 饮水 / 运动 / 项目分布 / 咖啡因曲线）
+  统一改为「已存在则原地 `update()`」，避免每次切页重播入场动画。
 - **文本安全**：`updateIntakeDisplay` / `updateExerciseDisplay` 使用 `escapeHtml` 转义。
 - **断词正确**：长英文用 `break-words` 而非 `break-all`，避免单词被从中间切断。
 
@@ -253,7 +253,7 @@ python3 -m http.server 8000
 │   └── screenshots/            # README 配图
 ├── tools/
 │   ├── seed.js                 # 生成两周样例数据（schema 与页面一致）
-│   ├── smoke.js                # 18 项交互冒烟测试（headless Chrome + CDP）
+│   ├── smoke.js                # 17 项交互冒烟测试（headless Chrome + CDP）
 │   └── verify-stats.js         # 统计口径回归：独立复算三区间并比对页面
 ├── LICENSE
 └── README.md
@@ -266,7 +266,7 @@ python3 -m http.server 8000
 `tools/` 下是本项目自带的验证脚本，基于 headless Chrome 的 CDP 协议驱动真实页面。
 
 ```bash
-# 交互冒烟：18 项
+# 交互冒烟：17 项
 node tools/smoke.js
 
 # 统计口径回归：本周 / 近 30 天 / 近 12 个月
