@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+
+# 本地数据导出（含个人记录，不应入库）
+*.export.json
+gssm-local-data*.json
+
+# 临时截图输出
+/tmp/
