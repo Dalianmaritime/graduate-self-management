@@ -7,8 +7,45 @@
 
 ---
 
+## ✳️ 二次开发说明
+
+本项目**基于 [Echo253/Graduate-self-management-records](https://github.com/Echo253/Graduate-self-management-records) 二次开发**，
+上游作者为 **Echo253**，原始仓库 46 stars / 2 forks。
+
+本仓库是上游仓库的 **GitHub 官方 fork**，保留了完整的父子关系：
+
+| 分支 | 来源 | 说明 |
+|---|---|---|
+| `html-v1` | 上游原样 | 上游的 HTML 单文件版本，未做任何改动，可随时对照 |
+| `nextjs-app-v2` | 上游原样 | 上游的 Next.js 全栈版本（由 tktogether 贡献），未做任何改动 |
+| `main` | **本仓库** | 二次开发主线，基于 `html-v1` 深度改造 |
+
+**上游作者与贡献者**
+
+- 上游项目：[Echo253/Graduate-self-management-records](https://github.com/Echo253/Graduate-self-management-records) —— 原始实现
+- Next.js v2 版本：[tktogether](https://github.com/tktogether) 的贡献
+
+**本仓库相对 `html-v1` 的改动**
+
+| 方向 | 具体内容 |
+|---|---|
+| 新增功能 | 科研进度看板（里程碑四态流转、阻塞原因、下一步转待办）、截止日倒计时、提醒机制（喝水间隔 + 自定义闹钟）、每日三问、咖啡因代谢曲线、GPT 文本批量导入、周回顾 |
+| 统计重做 | 新增「本周 / 近 30 天 / 近 12 个月」三周期；图表与底部汇总卡统一到同一区间口径（`getStatsRangeDates()`），修掉原先两者口径不一致的问题 |
+| 界面重构 | 新增 440 行独立设计系统层（`design-system`）：设计令牌、按钮体系、Hero、侧栏进度环与导航指示器、面板与卡片样式 |
+| 交互与动效 | ⌘K 命令面板（18 条命令 + 自由输入降级为待办）、区块错落入场、弹窗与 Toast 动效、数字滚动、待办勾选对勾与删除线扫过、计时器呼吸脉冲 |
+| 图表中性化 | 统计页 15 处彩色底块改为中性 `bg-gray-50` + 灰色描边，只给数据系列上色；建立工作 / 休息 / 咖啡 / 饮水 / 运动五个指标色族 |
+| 布局修正 | 看板改为横向滚动 + 固定列宽（`flex: 1 0 260px`），窄屏不再挤压变形 |
+| 缺陷修复 | `break-all` → `break-words`（英文单词不再被从中间切断）；`updateIntakeDisplay` / `updateExerciseDisplay` 补 `escapeHtml`；删除失效的 `btn-shadow` 规则（`theme('colors.primary.700')` 对扁平色值无效，该类从未生成） |
+| 工程质量 | 新增 `tools/` 验证脚本：17 项交互冒烟 + 三区间统计口径独立复算回归；补齐 README 的数据存储与提醒机制说明 |
+
+改动范围以 `html-v1` 分支为基准，可用 GitHub 的 Compare 视图逐行查看：
+**https://github.com/Dalianmaritime/graduate-self-management/compare/html-v1...main**
+
+---
+
 ## 目录
 
+- [二次开发说明](#️-二次开发说明)
 - [它解决什么问题](#它解决什么问题)
 - [快速开始](#快速开始)
 - [功能总览](#功能总览)
@@ -256,6 +293,7 @@ python3 -m http.server 8000
 │   ├── smoke.js                # 17 项交互冒烟测试（headless Chrome + CDP）
 │   └── verify-stats.js         # 统计口径回归：独立复算三区间并比对页面
 ├── LICENSE
+├── UPSTREAM.md                 # 二次开发溯源说明：上游、基线、改动清单
 └── README.md
 ```
 
@@ -312,4 +350,10 @@ node tools/verify-stats.js
 
 ## 许可
 
-[MIT](LICENSE) © 2026 Charile_Hao (Dalianmaritime)
+本仓库代码以 [MIT](LICENSE) 发布 © 2026 Charile_Hao (Dalianmaritime)。
+
+**上游项目** [Echo253/Graduate-self-management-records](https://github.com/Echo253/Graduate-self-management-records)
+在 GitHub 上未附带 LICENSE 文件，其原始代码版权归原作者 Echo253 所有。
+本仓库为上游项目的 fork，`html-v1` 与 `nextjs-app-v2` 两个分支完整保留上游原始内容，
+所有二次开发改动均集中在 `main` 分支。若需以本仓库代码为基础再分发，
+请同时遵守上游项目的授权约定并向上游作者致谢。
