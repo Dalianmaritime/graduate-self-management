@@ -247,6 +247,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
             .mood-btn .text-xs { font-size: 11px !important; }
             .hero-mood-note { font-size: 11px !important; }
             #mood-timeline { gap: 4px !important; }
+            .encourage-line { font-size: 11px !important; margin-top: 3px !important; padding-top: 4px !important; }
             #mood-timeline > span {
                 font-size: 11px !important;
                 padding: 2px 8px !important;
@@ -784,6 +785,427 @@ Check your Browserslist config to be sure that your targets are set up correctly
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7);
         }
 
+        /* ---------- P2 键盘与效率 ---------- */
+        .prio-bar {
+            width: 4px;
+            min-height: 26px;
+            align-self: stretch;
+            border-radius: 999px;
+            flex: none;
+        }
+        .prio-high { background: #e11d48; box-shadow: 0 0 0 1px rgba(225, 29, 72, .18); }
+        .prio-mid { background: #f59e0b; box-shadow: 0 0 0 1px rgba(245, 158, 11, .18); }
+        .prio-low { background: #94a3b8; box-shadow: 0 0 0 1px rgba(148, 163, 184, .22); }
+
+        .prio-btn {
+            transition: background-color var(--d-1) var(--ease), color var(--d-1) var(--ease);
+        }
+        .prio-btn--high { background: rgba(225, 29, 72, .1); color: #be123c; }
+        .prio-btn--high:hover { background: rgba(225, 29, 72, .18); }
+        .prio-btn--mid { background: rgba(245, 158, 11, .12); color: #b45309; }
+        .prio-btn--mid:hover { background: rgba(245, 158, 11, .2); }
+        .prio-btn--low { background: rgba(148, 163, 184, .14); color: #64748b; }
+        .prio-btn--low:hover { background: rgba(148, 163, 184, .24); }
+
+        .todo-row { cursor: grab; }
+        .todo-row.is-dragging {
+            opacity: .45;
+            cursor: grabbing;
+            transform: scale(.99);
+        }
+        .todo-row.is-drop-target {
+            box-shadow: 0 -2px 0 0 var(--brand);
+        }
+        .todo-row.drag-handle-active { cursor: grabbing; }
+
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .4rem;
+        }
+        .filter-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: .3rem;
+            padding: .2rem .55rem;
+            border-radius: 999px;
+            font-size: .72rem;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            color: var(--ink-2);
+            cursor: pointer;
+            transition: background-color var(--d-1) var(--ease), border-color var(--d-1) var(--ease), color var(--d-1) var(--ease);
+        }
+        .filter-chip:hover { border-color: var(--line-2); background: var(--surface-2); }
+        .filter-chip.is-on {
+            background: var(--brand-soft);
+            border-color: rgba(26, 86, 219, .28);
+            color: var(--brand);
+            font-weight: 600;
+        }
+        .filter-chip__dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            flex: none;
+        }
+
+        /* 快捷键面板 */
+        .kbd-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: .5rem .75rem;
+        }
+        .kbd-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: .75rem;
+            padding: .35rem .1rem;
+            border-bottom: 1px dashed var(--line);
+            font-size: .8rem;
+            color: var(--ink-2);
+        }
+
+        /* ---------- P3 洞察与目标 ---------- */
+        .insight-card {
+            border-radius: var(--r-md);
+            border: 1px solid var(--line);
+            background: var(--surface-2);
+            padding: 1rem 1.15rem;
+        }
+        .insight-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: .5rem 0;
+            border-bottom: 1px dashed var(--line);
+        }
+        .insight-row:last-child { border-bottom: 0; }
+        .insight-row__label {
+            font-size: .78rem;
+            color: var(--ink-2);
+        }
+        .insight-row__value {
+            font-size: .95rem;
+            font-weight: 700;
+            color: var(--ink);
+            font-variant-numeric: tabular-nums;
+        }
+        .insight-note {
+            font-size: .75rem;
+            color: var(--ink-3);
+            line-height: 1.55;
+            margin-top: .6rem;
+        }
+        .mood-scale {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            margin-top: .5rem;
+        }
+        .mood-scale__bar {
+            flex: 1;
+            height: 6px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #fda4af 0%, #fcd34d 50%, #6ee7b7 100%);
+            opacity: .55;
+        }
+        .mood-scale__dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 999px;
+            border: 2px solid #fff;
+            box-shadow: 0 1px 4px rgba(15, 23, 42, .3);
+            flex: none;
+        }
+        .goal-track {
+            height: 7px;
+            border-radius: 999px;
+            background: var(--surface-3);
+            overflow: hidden;
+            border: 1px solid var(--line);
+        }
+        .goal-track__fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #34d399, #10b981);
+            transition: width var(--d-3) var(--ease);
+        }
+        .goal-track__fill.is-over {
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+        }
+
+        /* 周回顾成果卡 */
+        .review-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: .75rem;
+            margin-bottom: 1rem;
+        }
+        .review-card {
+            border-radius: var(--r-md);
+            border: 1px solid var(--line);
+            background: var(--surface-2);
+            padding: .85rem 1rem;
+        }
+        .review-card__label {
+            font-size: .68rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--ink-3);
+        }
+        .review-card__value {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-top: .2rem;
+            font-variant-numeric: tabular-nums;
+        }
+        .review-card__sub {
+            font-size: .72rem;
+            color: var(--ink-3);
+            margin-top: .15rem;
+        }
+        .review-card__spark {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 22px;
+            margin-top: .5rem;
+        }
+        .review-card__spark i {
+            flex: 1;
+            min-width: 2px;
+            border-radius: 2px 2px 0 0;
+            background: var(--brand);
+            opacity: .55;
+        }
+
+        /* ---------- P1 微交互 ---------- */
+        /* 卡片悬停：只动 transform / box-shadow，不引起布局位移 */
+        .lift-card {
+            transition: transform var(--d-2) var(--ease), box-shadow var(--d-2) var(--ease), border-color var(--d-2) var(--ease);
+        }
+        .lift-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--sh-3);
+            border-color: var(--line-2);
+        }
+        .board-card, .project-chip, .milestone-card, .deadline-card {
+            transition: transform var(--d-2) var(--ease), box-shadow var(--d-2) var(--ease), border-color var(--d-2) var(--ease);
+        }
+        .board-card:hover, .milestone-card:hover, .deadline-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--sh-3);
+        }
+        .project-chip:hover { transform: translateY(-1px); }
+
+        /* 按钮按压 */
+        .btn { transition: transform var(--d-1) var(--ease), box-shadow var(--d-1) var(--ease), background-color var(--d-1) var(--ease), border-color var(--d-1) var(--ease), color var(--d-1) var(--ease), opacity var(--d-1) var(--ease); }
+        .btn:active { transform: scale(.97); }
+        .btn--primary:active { box-shadow: var(--sh-1); }
+        .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+        /* 滚动进度条 */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            transform-origin: 0 50%;
+            transform: scaleX(0);
+            background: linear-gradient(90deg, var(--brand), #60a5fa);
+            z-index: 90;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        /* 图表联动：高亮同步 */
+        .chart-frame.is-linked { box-shadow: inset 0 0 0 1px rgba(26, 86, 219, .12); }
+
+        /* 错落入场：只在区块首次进入视口时播放 */
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(8px);
+            animation: staggerIn var(--d-3) var(--ease) forwards;
+        }
+        @keyframes staggerIn {
+            to { opacity: 1; transform: none; }
+        }
+
+        /* ---------- 成就系统 ---------- */
+        #achievement-layer {
+            position: fixed;
+            right: 1rem;
+            bottom: calc(1rem + env(safe-area-inset-bottom));
+            z-index: 80;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+            gap: .5rem;
+            max-width: min(92vw, 330px);
+        }
+        .achievement-card {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+            width: 100%;
+            padding: .7rem .9rem;
+            border-radius: var(--r-md);
+            background: rgba(255, 255, 255, .94);
+            backdrop-filter: blur(18px) saturate(1.4);
+            -webkit-backdrop-filter: blur(18px) saturate(1.4);
+            border: 1px solid rgba(255, 255, 255, .8);
+            box-shadow: var(--sh-3);
+            animation: achIn var(--d-3) var(--ease) both, achOut var(--d-2) var(--ease) 2.6s forwards;
+        }
+        .achievement-card__icon {
+            flex: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 11px;
+            display: grid;
+            place-items: center;
+            font-size: 1.05rem;
+            background: linear-gradient(140deg, var(--brand-soft), #fff);
+            border: 1px solid rgba(26, 86, 219, .16);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9);
+        }
+        .achievement-card__label {
+            font-size: .625rem;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--brand);
+        }
+        .achievement-card__title {
+            font-size: .82rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-top: .05rem;
+        }
+        .achievement-card__desc {
+            font-size: .72rem;
+            color: var(--ink-2);
+            margin-top: .1rem;
+            line-height: 1.4;
+        }
+        @keyframes achIn {
+            from { transform: translateY(-18px) scale(.94); opacity: 0; }
+            to { transform: none; opacity: 1; }
+        }
+        @keyframes achOut {
+            to { transform: translateY(-10px) scale(.97); opacity: 0; }
+        }
+
+        .ach-chip {
+            aspect-ratio: 1;
+            border-radius: 11px;
+            display: grid;
+            place-items: center;
+            background: var(--surface-3);
+            border: 1px solid var(--line);
+            transition: transform var(--d-2) var(--ease), background-color var(--d-2) var(--ease);
+        }
+        .ach-chip__icon { font-size: .95rem; color: var(--ink-3); line-height: 1; }
+        .ach-chip.is-on {
+            background: linear-gradient(150deg, #fffbeb, #fef3c7);
+            border-color: rgba(217, 119, 6, .24);
+        }
+        .ach-chip.is-on .ach-chip__icon { color: #b45309; }
+        .ach-chip:hover { transform: translateY(-2px); }
+
+        @media (max-width: 767.98px) {
+            #achievement-layer { bottom: calc(4.75rem + env(safe-area-inset-bottom)); }
+        }
+
+        /* ---------- 连续打卡 ---------- */
+        .streak-strip { display: flex; gap: 4px; }
+        .streak-cell {
+            width: 100%;
+            height: 22px;
+            border-radius: 5px;
+            background: var(--surface-3);
+            border: 1px solid var(--line);
+            transition: background-color var(--d-2) var(--ease), transform var(--d-2) var(--ease);
+        }
+        .streak-cell.is-on {
+            background: linear-gradient(180deg, #fb923c, #ea580c);
+            border-color: transparent;
+            box-shadow: 0 2px 6px rgba(234, 88, 12, .28);
+        }
+        .streak-cell.is-today {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(234, 88, 12, .34);
+        }
+        .streak-flame {
+            display: inline-grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
+            background: linear-gradient(140deg, #fff7ed, #ffedd5);
+            border: 1px solid rgba(234, 88, 12, .22);
+            font-size: .95rem;
+            flex: none;
+        }
+
+        /* ---------- 鼓励语 ---------- */
+        .encourage-line {
+            display: flex;
+            align-items: flex-start;
+            gap: .4rem;
+            font-size: .78rem;
+            line-height: 1.5;
+            color: var(--ink-2);
+            max-width: 30rem;
+            margin: .35rem auto 0;
+            padding-top: .45rem;
+            border-top: 1px solid rgba(15, 23, 42, .07);
+            text-align: left;
+        }
+        .encourage-line:empty { display: none; }
+        .encourage-line__dot {
+            flex: none;
+            width: 5px;
+            height: 5px;
+            margin-top: .48rem;
+            border-radius: 999px;
+            background: var(--brand);
+            opacity: .55;
+        }
+
+        /* ---------- 空状态 ---------- */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .7rem;
+            padding: 2rem 1.25rem;
+            text-align: center;
+            border-radius: var(--r-md);
+            border: 1px dashed var(--line-2);
+            background: var(--surface-2);
+        }
+        .empty-state svg { width: 46px; height: 46px; opacity: .9; }
+        .empty-state__title {
+            font-size: .875rem;
+            font-weight: 600;
+            color: var(--ink-2);
+        }
+        .empty-state__hint {
+            font-size: .78rem;
+            color: var(--ink-3);
+            max-width: 26rem;
+            line-height: 1.55;
+        }
+
         /* ---------- 降级：减少动态效果 ---------- */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -834,6 +1256,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
                     <p class="hero-mood-note text-xs text-center text-gray-500">当前选择 <span id="current-mood-display">未选择</span></p>
                     <!-- 心情记录时间线 -->
                     <div id="mood-timeline" class="flex flex-wrap justify-center gap-1.5"></div>
+                    <!-- 数据驱动的鼓励语 -->
+                    <div id="encourage-line" class="encourage-line" role="status"></div>
                 </div>
             </div>
         </header>
@@ -895,6 +1319,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
                         </li>
                     </ul>
 
+                    <div id="streak-panel" class="mt-4 p-4 panel-soft"></div>
+
                     <div id="today-status-panel" class="mt-6 p-4 panel-soft">
                         <div class="flex items-center justify-between mb-3">
                             <h3 class="text-[11px] font-semibold text-gray-500 uppercase tracking-[.16em]">今日状态</h3>
@@ -951,6 +1377,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
                             </div>
                         </div>
                     </div>
+
+                    <div id="achievement-wall" class="mt-4 p-4 panel-soft"></div>
                 </div>
             </nav>
 
@@ -1396,10 +1824,14 @@ Check your Browserslist config to be sure that your targets are set up correctly
                         </div>
                     </div>
 
+                    <!-- 搜索 / 筛选 / 优先级 -->
+                    <div id="todo-toolbar"></div>
+
                     <!-- 待办列表 -->
                     <div class="mb-8">
                         <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                             <span class="mr-2">○</span>待完成
+                            <span id="todo-pending-count" class="text-xs font-normal text-gray-400 ml-1"></span>
                         </h3>
                         <div id="todo-pending" class="space-y-2">
                             <div class="text-gray-400 text-sm">暂无待办事项</div>
@@ -1437,6 +1869,45 @@ Check your Browserslist config to be sure that your targets are set up correctly
                             <button id="btn-view-date" class="bg-primary hover:bg-primary/90 text-white py-2 px-4 rounded-lg font-medium">查看</button>
                         </div>
                         <div id="date-summary" class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-sm hidden"></div>
+                    </div>
+
+                    <!-- 目标设置 -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
+                        <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                            <h3 class="text-lg font-semibold text-gray-700">目标</h3>
+                            <span class="text-xs text-gray-500">设定后图表会画出目标线</span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-4">
+                            <label class="flex items-center gap-2 text-sm text-gray-600">
+                                每日工作目标
+                                <input id="goal-daily-hours" type="number" min="0" max="24" step="0.5"
+                                       class="px-3 py-2 border border-gray-300 rounded-lg w-24 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                                小时
+                            </label>
+                            <label class="flex items-center gap-2 text-sm text-gray-600">
+                                每周工作目标
+                                <input id="goal-weekly-hours" type="number" min="0" max="168" step="1"
+                                       class="px-3 py-2 border border-gray-300 rounded-lg w-24 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                                小时
+                            </label>
+                            <span id="goal-summary" class="text-xs text-gray-500"></span>
+                        </div>
+                        <div class="mt-3">
+                            <div class="flex items-center justify-between text-xs text-gray-500 mb-1.5">
+                                <span>本周进度</span>
+                                <span id="goal-progress-text"></span>
+                            </div>
+                            <div class="goal-track"><div id="goal-progress-fill" class="goal-track__fill" style="width:0%"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- 心情与效率关联 -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
+                        <div class="flex flex-wrap items-center justify-between gap-3 mb-1">
+                            <h3 class="text-lg font-semibold text-gray-700">心情与效率</h3>
+                            <span id="mood-efficiency-sample" class="text-xs text-gray-500"></span>
+                        </div>
+                        <div id="mood-efficiency-body"></div>
                     </div>
 
                     <!-- 统计周期选择 -->
@@ -1769,6 +2240,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
         <div class="bg-white rounded-xl shadow-xl w-full max-w-xl p-6 max-h-[88vh] overflow-y-auto">
             <h3 class="text-lg font-bold text-gray-800 mb-1">本周回顾</h3>
             <p class="text-xs text-gray-500 mb-4">最近 7 天的汇总，可直接复制发给导师或存档</p>
+            <div id="weekly-review-cards" class="review-cards"></div>
             <pre id="weekly-review-text" class="whitespace-pre-wrap text-sm bg-gray-50 p-4 rounded-lg"></pre>
             <div class="flex justify-end gap-3 mt-5">
                 <button id="weekly-review-copy" type="button" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg">复制文本</button>
@@ -1778,6 +2250,26 @@ Check your Browserslist config to be sure that your targets are set up correctly
     </div>
 
     <div id="app-toast" class="hidden fixed top-6 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-4 py-3 rounded-lg shadow-lg z-50 text-sm"></div>
+
+    <!-- 成就解锁提示层 -->
+    <div id="achievement-layer" aria-live="polite"></div>
+
+    <!-- 阅读进度条 -->
+    <div id="scroll-progress" aria-hidden="true"></div>
+
+    <!-- 快捷键面板 -->
+    <div id="shortcut-modal" class="hidden fixed inset-0 bg-black/40 z-50 flex items-center justify-center px-4">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 max-h-[88vh] overflow-y-auto">
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-1">键盘快捷键</h3>
+                    <p class="text-xs text-gray-500">在输入框之外按下即可</p>
+                </div>
+                <button id="shortcut-close" type="button" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm">关闭</button>
+            </div>
+            <div id="shortcut-list" class="kbd-grid"></div>
+        </div>
+    </div>
 
     <!-- 命令面板 -->
     <div id="cmdk-modal" class="hidden fixed inset-0 z-[60] flex items-start justify-center px-4 pt-[12vh]">
@@ -1977,7 +2469,17 @@ Check your Browserslist config to be sure that your targets are set up correctly
             initCaffeineCard();
             initTodoImport();
             initWeeklyReview();
+            document.getElementById('shortcut-close')?.addEventListener('click', () => closeModalEl('shortcut-modal'));
+            loadAchievements();
+            initScrollProgress();
+            initGoals();
+            initGlobalShortcuts();
+            initTodoDragSort();
+            renderTodoToolbar();
             updateTodayStatus();
+            renderStreak();
+            renderEncouragement();
+            renderAchievementWall();
             updateNextDeadlineLine();
             moveNavIndicator();
             window.addEventListener('resize', moveNavIndicator);
@@ -2386,6 +2888,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
                 reflectionData,
                 caffeineSettings,
                 moodData: JSON.parse(localStorage.getItem('moodData') || '{}'),
+                achievementData,
+                goalSettings,
                 activeWorkState: {
                     workState,
                     currentWorkSession,
@@ -2471,6 +2975,21 @@ Check your Browserslist config to be sure that your targets are set up correctly
                     }
                     localStorage.setItem('todoData', JSON.stringify(parsed.todoData || {}));
                     localStorage.setItem('moodData', JSON.stringify(parsed.moodData || {}));
+                    if (parsed.achievementData && typeof parsed.achievementData === 'object' && parsed.achievementData.unlocked) {
+                        achievementData = { unlocked: parsed.achievementData.unlocked };
+                        saveAchievements();
+                    }
+                    if (parsed.goalSettings && typeof parsed.goalSettings === 'object') {
+                        goalSettings = {
+                            dailyHours: Number(parsed.goalSettings.dailyHours) || 0,
+                            weeklyHours: Number(parsed.goalSettings.weeklyHours) || 0
+                        };
+                        saveGoals();
+                        const gd = document.getElementById('goal-daily-hours');
+                        const gw = document.getElementById('goal-weekly-hours');
+                        if (gd) gd.value = goalSettings.dailyHours || '';
+                        if (gw) gw.value = goalSettings.weeklyHours || '';
+                    }
                     lastExportFileName = file.name;
                     saveData();
                     initData();
@@ -2495,6 +3014,9 @@ Check your Browserslist config to be sure that your targets are set up correctly
                     updateCaffeineCurve();
                     updateNextDeadlineLine();
                     updateTodayStatus();
+                    renderStreak();
+                    renderEncouragement();
+                    renderAchievementWall();
                     updateDataStorageStatus();
                     document.getElementById('nav-tasks').click();
                     closeStorageModal();
@@ -2587,6 +3109,11 @@ Check your Browserslist config to be sure that your targets are set up correctly
 
             if (previousSection !== sectionId) {
                 animateSectionIn(sectionId);
+                const activeSection = document.getElementById(sectionId);
+                if (activeSection) {
+                    staggerObserver.reset(activeSection);
+                    staggerObserver.observe(activeSection);
+                }
             }
         }
 
@@ -2745,6 +3272,9 @@ Check your Browserslist config to be sure that your targets are set up correctly
             updateTodayWorkStats();
             showActionEmoji('btn-off', '🐎');
             saveData();
+            renderStreak();
+            renderEncouragement();
+            unlockAchievements();
 
             if (closedWorkIndex >= 0) {
                 const closed = workData.records[today].workSessions[closedWorkIndex];
@@ -2861,7 +3391,11 @@ Check your Browserslist config to be sure that your targets are set up correctly
             const container = document.getElementById('today-work-sessions');
 
             if (sessions.length === 0) {
-                container.innerHTML = '<div class="text-gray-500 text-sm">暂无工作记录</div>';
+                container.innerHTML = emptyStateHtml(
+                    '今天还没有工作记录',
+                    '开始一段专注就会出现在这里，哪怕只有 25 分钟。',
+                    { label: '开始上班', onclick: 'startWork()' }
+                );
                 return;
             }
 
@@ -2893,7 +3427,11 @@ Check your Browserslist config to be sure that your targets are set up correctly
             const container = document.getElementById('today-rest-sessions');
 
             if (sessions.length === 0) {
-                container.innerHTML = '<div class="text-gray-500 text-sm">暂无休息记录</div>';
+                container.innerHTML = emptyStateHtml(
+                    '今天还没有休息记录',
+                    '休息也是记录的一部分 —— 起身走走，回来再继续。',
+                    null
+                );
                 return;
             }
 
@@ -3376,6 +3914,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
             showActionEmoji('add-water', '💧');
             updateIntakeDisplay();
             updateTodayStatus();
+            unlockAchievements();
         }
 
         function updateIntakeDisplay() {
@@ -3423,7 +3962,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
             records.sort((a, b) => b.id - a.id);
 
             if (records.length === 0) {
-                container.innerHTML = '<div class="text-gray-400">暂无记录</div>';
+                container.innerHTML = emptyStateHtml('还没有咖啡记录', '记下今天喝的第一杯，之后能看到咖啡因曲线。', null);
             } else {
                 container.innerHTML = records.map(r => r.html).join('');
             }
@@ -3508,7 +4047,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
             const times = toiletData.records[today]?.times || [];
 
             if (times.length === 0) {
-                container.innerHTML = '<div class="text-gray-500 text-sm">暂无记录</div>';
+                container.innerHTML = emptyStateHtml('还没有运动记录', '哪怕是散步十分钟，也值得被记下来。', null);
             } else {
                 container.innerHTML = times.map((t, i) => `
                     <div class="flex justify-between items-center bg-white rounded px-3 py-2">
@@ -3780,6 +4319,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
             renderTodoList();
             if (project.created) {
                 renderProjectChips();
+                renderTodoToolbar();
                 showToast('已新增项目「' + parsed.projectName + '」');
             }
         }
@@ -3793,6 +4333,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
                 todoData.completed.push(todo);
                 localStorage.setItem('todoData', JSON.stringify(todoData));
                 renderTodoList();
+                unlockAchievements();
             };
 
             const checkBtn = document.querySelector('[data-todo-check="' + id + '"]');
@@ -3834,9 +4375,15 @@ Check your Browserslist config to be sure that your targets are set up correctly
             const completedWrapper = document.getElementById('todo-completed-wrapper');
             const completedSummary = document.getElementById('todo-completed-summary');
             const completedToggleIcon = document.getElementById('completed-toggle-icon');
+            const pendingCountEl = document.getElementById('todo-pending-count');
 
             if (todoData.pending.length === 0) {
-                pendingContainer.innerHTML = '<div class="text-gray-400 text-sm">暂无待办事项</div>';
+                if (pendingCountEl) pendingCountEl.textContent = '0 项';
+                pendingContainer.innerHTML = emptyStateHtml(
+                    '清单是空的',
+                    '把脑子里的事写下来，它就不用一直占着内存。',
+                    { label: '添加待办', onclick: "document.getElementById('todo-input')?.focus()" }
+                );
             } else {
                 const sorted = todoData.pending.slice().sort((a, b) => {
                     const da = a.dueDate ? daysFromToday(a.dueDate) : 99999;
@@ -3844,7 +4391,11 @@ Check your Browserslist config to be sure that your targets are set up correctly
                     if (da !== db) return da - db;
                     return String(a.createdAt || '').localeCompare(String(b.createdAt || ''));
                 });
-                pendingContainer.innerHTML = sorted.map((todo, idx) => {
+                const visible = sorted.filter(todoMatchesFilter);
+                pendingCountEl.textContent = todoView.query || todoView.priority !== 'all' || todoView.projectId !== 'all'
+                    ? visible.length + ' / ' + sorted.length + ' 项'
+                    : sorted.length + ' 项';
+                pendingContainer.innerHTML = visible.map((todo, idx) => {
                     const project = getProject(todo.projectId);
                     const chip = project
                         ? '<span class="text-xs px-2 py-0.5 rounded-full" style="background:' + project.color + '1a;color:' + project.color + '">' + escapeHtml(project.name) + '</span>'
@@ -3853,9 +4404,12 @@ Check your Browserslist config to be sure that your targets are set up correctly
                     const due = todo.dueDate
                         ? '<span class="text-xs font-medium ' + countdownColor(days) + '">' + countdownLabel(days) + '</span>'
                         : '';
+                    const prio = getTodoPriority(todo);
+                    const prioDef = TODO_PRIORITIES.find(p => p.id === prio);
                     return `
-                    <div class="todo-row rise-in flex items-center justify-between gap-3 p-3 bg-white rounded-lg shadow-sm" style="animation-delay:${Math.min(idx, 12) * 34}ms">
-                        <div class="flex items-center gap-3 min-w-0">
+                    <div class="todo-row stagger-item flex items-center justify-between gap-3 p-3 bg-white rounded-lg shadow-sm" data-stagger draggable="true" data-todo-id="${todo.id}" style="animation-delay:${Math.min(idx, 12) * 34}ms">
+                        <div class="flex items-center gap-3 min-w-0 flex-1">
+                            <span class="prio-bar ${prioDef.cls}" title="优先级：${prioDef.label}"></span>
                             <button onclick="completeTodo(${todo.id})" data-todo-check="${todo.id}" aria-label="完成 ${escapeHtml(todo.text)}" class="todo-check w-6 h-6 shrink-0 rounded-full border-2 border-gray-300 hover:border-emerald-500 hover:bg-emerald-50"></button>
                             <div class="min-w-0">
                                 <div class="text-gray-800 break-words strike-sweep" data-todo-text="${todo.id}">${escapeHtml(todo.text)}</div>
@@ -3866,16 +4420,24 @@ Check your Browserslist config to be sure that your targets are set up correctly
                             </div>
                         </div>
                         <div class="flex items-center gap-2 shrink-0">
+                            <button onclick="cycleTodoPriority(${todo.id})" title="切换优先级（当前：${prioDef.label}）" aria-label="切换优先级" class="prio-btn prio-btn--${prio} w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold">${prioDef.label}</button>
                             <button onclick="todoToMilestone(${todo.id})" title="升级为里程碑" aria-label="升级为里程碑" class="w-7 h-7 rounded-lg bg-gray-50 text-gray-400 hover:text-primary hover:bg-blue-50 flex items-center justify-center transition-colors">↑</button>
                             <button onclick="deleteTodo(${todo.id}, 'pending')" title="删除" aria-label="删除" class="w-7 h-7 rounded-lg bg-gray-50 text-gray-400 hover:text-red-500 hover:bg-red-50 flex items-center justify-center transition-colors">×</button>
                         </div>
                     </div>
                 `;
                 }).join('');
+                if (!visible.length) {
+                    pendingContainer.innerHTML = emptyStateHtml(
+                        '没有匹配的待办',
+                        todoView.query ? '换个关键词试试，或清空筛选条件。' : '当前筛选条件下没有待办。',
+                        { label: '清空筛选', onclick: 'clearTodoFilters()' }
+                    );
+                }
             }
 
             if (todoData.completed.length === 0) {
-                completedContainer.innerHTML = '<div class="text-gray-400 text-sm">暂无已完成事项</div>';
+                completedContainer.innerHTML = emptyStateHtml('还没有完成的事项', '完成一件小事就会出现在这里。', null);
                 completedSummary.textContent = '暂无已完成事项';
             } else {
                 completedContainer.innerHTML = todoData.completed.map(todo => `
@@ -3900,6 +4462,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
             completedWrapper.classList.toggle('hidden', !completedTodosExpanded);
             completedSummary.classList.toggle('hidden', completedTodosExpanded);
             completedToggleIcon.textContent = completedTodosExpanded ? '收起' : '展开';
+            staggerObserver.observe(pendingContainer);
         }
 
         function toggleCompletedTodos() {
@@ -3919,11 +4482,1012 @@ Check your Browserslist config to be sure that your targets are set up correctly
         window.completeTodo = completeTodo;
         window.uncompleteTodo = uncompleteTodo;
         window.deleteTodo = deleteTodo;
+        window.cycleTodoPriority = cycleTodoPriority;
+        window.clearTodoFilters = clearTodoFilters;
         window.deleteIntakeRecord = deleteIntakeRecord;
 
         // 心情数据结构
         let moodData = { records: [] };
         let currentMoodStart = null; // 当前心情开始时间
+
+        // ============================================================
+        // P2 键盘与效率：快捷键 / 待办搜索 / 优先级 / 筛选 / 拖拽排序
+        // ============================================================
+
+        // 待办视图状态（不持久化，属于纯界面状态）
+        const todoView = {
+            query: '',
+            priority: 'all',     // all | high | mid | low
+            projectId: 'all'     // all | <projectId>
+        };
+
+        const TODO_PRIORITIES = [
+            { id: 'high', label: '高', cls: 'prio-high' },
+            { id: 'mid', label: '中', cls: 'prio-mid' },
+            { id: 'low', label: '低', cls: 'prio-low' }
+        ];
+
+        function getTodoPriority(todo) {
+            const p = todo?.priority;
+            return TODO_PRIORITIES.some(x => x.id === p) ? p : 'mid';
+        }
+
+        function todoMatchesFilter(todo) {
+            if (todoView.priority !== 'all' && getTodoPriority(todo) !== todoView.priority) return false;
+            if (todoView.projectId !== 'all' && (todo.projectId || '') !== todoView.projectId) return false;
+            if (todoView.query) {
+                const q = todoView.query.toLowerCase();
+                const project = getProject(todo.projectId);
+                const haystack = [
+                    todo.text || '',
+                    project?.name || '',
+                    todo.dueDate || '',
+                    todo.createdAt || ''
+                ].join(' ').toLowerCase();
+                if (!haystack.includes(q)) return false;
+            }
+            return true;
+        }
+
+        // ---------- 待办工具栏 HTML ----------
+        function renderTodoToolbar() {
+            const host = document.getElementById('todo-toolbar');
+            if (!host) return;
+
+            const projects = workProjects || [];
+            let html = '<div class="flex flex-col md:flex-row md:items-center gap-2.5 mb-3">' +
+                '<div class="relative flex-1 min-w-0">' +
+                    '<i class="fa fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>' +
+                    '<input id="todo-search" type="search" placeholder="搜索待办、项目或日期" ' +
+                        'class="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary">' +
+                '</div>' +
+                '<div class="filter-bar" id="todo-priority-filters">' +
+                    '<span class="text-xs text-gray-400 mr-1">优先级</span>' +
+                    '<button type="button" class="filter-chip" data-prio="all">全部</button>' +
+                    TODO_PRIORITIES.map(p =>
+                        '<button type="button" class="filter-chip" data-prio="' + p.id + '">' +
+                        '<span class="filter-chip__dot ' + p.cls + '"></span>' + p.label + '</button>'
+                    ).join('') +
+                '</div>' +
+            '</div>';
+
+            if (projects.length > 1) {
+                html += '<div class="filter-bar mb-3" id="todo-project-filters">' +
+                    '<span class="text-xs text-gray-400 mr-1">项目</span>' +
+                    '<button type="button" class="filter-chip" data-project="all">全部</button>' +
+                    projects.map(p =>
+                        '<button type="button" class="filter-chip" data-project="' + escapeHtml(p.id) + '">' +
+                        '<span class="filter-chip__dot" style="background:' + escapeHtml(p.color) + '"></span>' +
+                        escapeHtml(p.name) + '</button>'
+                    ).join('') +
+                '</div>';
+            }
+
+            host.innerHTML = html;
+
+            const search = document.getElementById('todo-search');
+            if (search) {
+                search.value = todoView.query;
+                search.addEventListener('input', () => {
+                    todoView.query = search.value.trim();
+                    renderTodoList();
+                });
+            }
+            host.querySelectorAll('[data-prio]').forEach(btn => {
+                btn.classList.toggle('is-on', btn.getAttribute('data-prio') === todoView.priority);
+                btn.addEventListener('click', () => {
+                    todoView.priority = btn.getAttribute('data-prio');
+                    renderTodoToolbar();
+                    renderTodoList();
+                });
+            });
+            host.querySelectorAll('[data-project]').forEach(btn => {
+                btn.classList.toggle('is-on', btn.getAttribute('data-project') === todoView.projectId);
+                btn.addEventListener('click', () => {
+                    todoView.projectId = btn.getAttribute('data-project');
+                    renderTodoToolbar();
+                    renderTodoList();
+                });
+            });
+        }
+
+        function clearTodoFilters() {
+            todoView.query = '';
+            todoView.priority = 'all';
+            todoView.projectId = 'all';
+            renderTodoToolbar();
+            renderTodoList();
+        }
+
+        // ---------- 优先级切换 ----------
+        function cycleTodoPriority(id) {
+            const todo = todoData.pending.find(t => t.id === id);
+            if (!todo) return;
+            const order = ['high', 'mid', 'low'];
+            const current = getTodoPriority(todo);
+            const next = order[(order.indexOf(current) + 1) % order.length];
+            todo.priority = next;
+            localStorage.setItem('todoData', JSON.stringify(todoData));
+            renderTodoList();
+        }
+
+        // ---------- 拖拽排序 ----------
+        let dragTodoId = null;
+
+        function initTodoDragSort() {
+            const container = document.getElementById('todo-pending');
+            if (!container) return;
+
+            container.addEventListener('dragstart', (e) => {
+                const row = e.target.closest('[data-todo-id]');
+                if (!row) return;
+                dragTodoId = Number(row.getAttribute('data-todo-id'));
+                row.classList.add('is-dragging');
+                e.dataTransfer.effectAllowed = 'move';
+                try { e.dataTransfer.setData('text/plain', String(dragTodoId)); } catch (err) { /* 忽略 */ }
+            });
+
+            container.addEventListener('dragend', (e) => {
+                const row = e.target.closest('[data-todo-id]');
+                if (row) row.classList.remove('is-dragging');
+                container.querySelectorAll('.is-drop-target').forEach(el => el.classList.remove('is-drop-target'));
+                dragTodoId = null;
+            });
+
+            container.addEventListener('dragover', (e) => {
+                if (dragTodoId === null) return;
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                const row = e.target.closest('[data-todo-id]');
+                container.querySelectorAll('.is-drop-target').forEach(el => el.classList.remove('is-drop-target'));
+                if (row && Number(row.getAttribute('data-todo-id')) !== dragTodoId) {
+                    row.classList.add('is-drop-target');
+                }
+            });
+
+            container.addEventListener('drop', (e) => {
+                if (dragTodoId === null) return;
+                e.preventDefault();
+                const row = e.target.closest('[data-todo-id]');
+                container.querySelectorAll('.is-drop-target').forEach(el => el.classList.remove('is-drop-target'));
+                if (!row) return;
+                const targetId = Number(row.getAttribute('data-todo-id'));
+                if (targetId === dragTodoId) return;
+
+                const from = todoData.pending.findIndex(t => t.id === dragTodoId);
+                if (from === -1) return;
+                const [moved] = todoData.pending.splice(from, 1);
+                const to = todoData.pending.findIndex(t => t.id === targetId);
+                if (to === -1) { todoData.pending.splice(from, 0, moved); return; }
+                todoData.pending.splice(to, 0, moved);
+                localStorage.setItem('todoData', JSON.stringify(todoData));
+                renderTodoList();
+            });
+        }
+
+        // ---------- 全局快捷键 ----------
+        const SHORTCUTS = [
+            { keys: '1 – 5', label: '切换模块（打卡/科研/待办/记录/统计）' },
+            { keys: 'N', label: '新建待办' },
+            { keys: 'W', label: '开始上班' },
+            { keys: 'S', label: '收工' },
+            { keys: 'R', label: '休息一下' },
+            { keys: '/', label: '搜索待办' },
+            { keys: '⌘K', label: '命令面板' },
+            { keys: '?', label: '打开快捷键面板' },
+            { keys: 'Esc', label: '关闭弹窗 / 退出搜索' }
+        ];
+
+        function isTypingTarget(el) {
+            if (!el) return false;
+            const tag = (el.tagName || '').toLowerCase();
+            return tag === 'input' || tag === 'textarea' || tag === 'select' || el.isContentEditable;
+        }
+
+        function initGlobalShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                // ⌘K 已在命令面板内部处理
+                if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+                // Esc：关闭最上层弹窗
+                if (e.key === 'Escape') {
+                    const openModals = [...document.querySelectorAll('[id$="-modal"]')]
+                        .filter(m => !m.classList.contains('hidden'));
+                    if (openModals.length) {
+                        const top = openModals[openModals.length - 1];
+                        top.classList.remove('is-open');
+                        setTimeout(() => top.classList.add('hidden'), 190);
+                        return;
+                    }
+                    if (todoView.query) {
+                        todoView.query = '';
+                        const search = document.getElementById('todo-search');
+                        if (search) search.value = '';
+                        renderTodoList();
+                    }
+                    return;
+                }
+
+                if (isTypingTarget(e.target)) return;
+
+                // ? 打开快捷键面板
+                if (e.key === '?') {
+                    e.preventDefault();
+                    openShortcutModal();
+                    return;
+                }
+
+                // / 聚焦待办搜索
+                if (e.key === '/') {
+                    e.preventDefault();
+                    showSection('tasks-section');
+                    setTimeout(() => document.getElementById('todo-search')?.focus(), 180);
+                    return;
+                }
+
+                const key = String(e.key).toLowerCase();
+
+                // 1–5 切换模块
+                if (['1', '2', '3', '4', '5'].includes(key)) {
+                    e.preventDefault();
+                    const ids = ['checkin-section', 'research-section', 'tasks-section', 'body-section', 'stats-section'];
+                    showSection(ids[Number(key) - 1]);
+                    return;
+                }
+
+                if (key === 'n') {
+                    e.preventDefault();
+                    showSection('tasks-section');
+                    setTimeout(() => document.getElementById('todo-input')?.focus(), 160);
+                    return;
+                }
+                if (key === 'w') {
+                    e.preventDefault();
+                    showSection('checkin-section');
+                    startWork();
+                    return;
+                }
+                if (key === 's') {
+                    e.preventDefault();
+                    showSection('checkin-section');
+                    endWork();
+                    return;
+                }
+                if (key === 'r') {
+                    e.preventDefault();
+                    showSection('checkin-section');
+                    startRest();
+                    return;
+                }
+            });
+        }
+
+        function openShortcutModal() {
+            const modal = document.getElementById('shortcut-modal');
+            if (!modal) return;
+            const list = document.getElementById('shortcut-list');
+            if (list) {
+                list.innerHTML = SHORTCUTS.map(s =>
+                    '<div class="kbd-row"><span>' + escapeHtml(s.label) + '</span>' +
+                    '<span class="cmdk-key">' + escapeHtml(s.keys) + '</span></div>'
+                ).join('');
+            }
+            openModalEl('shortcut-modal');
+        }
+
+        // ============================================================
+        // P3 洞察与目标：心情×效率 / 目标线 / 周回顾成果卡
+        // ============================================================
+
+        // ---------- 目标设置（沿用 caffeineSettings 同类存储方式） ----------
+        let goalSettings = { dailyHours: 0, weeklyHours: 0 };
+
+        function loadGoals() {
+            try {
+                const raw = localStorage.getItem('goalSettings');
+                if (!raw) return;
+                const parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === 'object') {
+                    goalSettings = {
+                        dailyHours: Number(parsed.dailyHours) || 0,
+                        weeklyHours: Number(parsed.weeklyHours) || 0
+                    };
+                }
+            } catch (error) {
+                goalSettings = { dailyHours: 0, weeklyHours: 0 };
+            }
+        }
+
+        function saveGoals() {
+            try {
+                localStorage.setItem('goalSettings', JSON.stringify(goalSettings));
+            } catch (error) { /* 忽略 */ }
+        }
+
+        function initGoals() {
+            loadGoals();
+            const daily = document.getElementById('goal-daily-hours');
+            const weekly = document.getElementById('goal-weekly-hours');
+            if (daily) daily.value = goalSettings.dailyHours || '';
+            if (weekly) weekly.value = goalSettings.weeklyHours || '';
+
+            const apply = () => {
+                goalSettings.dailyHours = Math.max(0, Number(daily?.value) || 0);
+                goalSettings.weeklyHours = Math.max(0, Number(weekly?.value) || 0);
+                saveGoals();
+                renderGoalProgress();
+                syncGoalLine();
+            };
+            daily?.addEventListener('change', apply);
+            weekly?.addEventListener('change', apply);
+            renderGoalProgress();
+        }
+
+        // 本周（最近 7 天）实际工作小时
+        function getRecentWeekWorkHours() {
+            const dates = getStatsRangeDates('week');
+            const set = new Set(dates);
+            let minutes = 0;
+            Object.keys(workData.records || {}).forEach(key => {
+                if (!set.has(key)) return;
+                minutes += ((workData.records[key]?.workSessions) || []).reduce((s, x) => s + (x.duration || 0), 0);
+            });
+            return minutes / 60;
+        }
+
+        function renderGoalProgress() {
+            const fill = document.getElementById('goal-progress-fill');
+            const text = document.getElementById('goal-progress-text');
+            const summary = document.getElementById('goal-summary');
+            if (!fill || !text) return;
+
+            const actual = getRecentWeekWorkHours();
+            const target = goalSettings.weeklyHours || 0;
+            const ratio = target > 0 ? actual / target : 0;
+            const pct = Math.min(100, Math.round(ratio * 100));
+            fill.style.width = pct + '%';
+            fill.classList.toggle('is-over', target > 0 && actual > target);
+            text.textContent = target > 0
+                ? actual.toFixed(1) + ' / ' + target + ' 小时'
+                : actual.toFixed(1) + ' 小时';
+
+            if (summary) {
+                summary.textContent = target > 0
+                    ? (actual >= target ? '本周目标已达成' : '还差 ' + (target - actual).toFixed(1) + ' 小时')
+                    : '未设目标';
+            }
+        }
+
+        // ---------- 目标线（画在每日工作时长图上） ----------
+        // Chart.js 4 的自定义绘制必须以插件形式注册，塞进 options.plugins 不生效
+        const goalLinePlugin = {
+            id: 'gssmGoalLine',
+            afterDatasetsDraw(chart) {
+                const target = goalSettings.dailyHours || 0;
+                if (target <= 0) return;
+                const c = chart.ctx;
+                const chartArea = chart.chartArea;
+                const yScale = chart.scales && chart.scales.y;
+                if (!chartArea || !yScale) return;
+                const y = yScale.getPixelForValue(target);
+                if (y < chartArea.top || y > chartArea.bottom) return;
+
+                c.save();
+                c.strokeStyle = 'rgba(217, 119, 6, .75)';
+                c.setLineDash([6, 5]);
+                c.lineWidth = 1.5;
+                c.beginPath();
+                c.moveTo(chartArea.left, y);
+                c.lineTo(chartArea.right, y);
+                c.stroke();
+                c.setLineDash([]);
+                c.fillStyle = 'rgba(180, 83, 9, .95)';
+                c.font = '600 11px system-ui, sans-serif';
+                c.textAlign = 'right';
+                c.textBaseline = 'bottom';
+                c.fillText('目标 ' + target + 'h', chartArea.right - 4, y - 4);
+                c.restore();
+            }
+        };
+
+        let goalLineRegistered = false;
+        function registerGoalLinePlugin() {
+            if (goalLineRegistered || typeof Chart === 'undefined') return;
+            Chart.register(goalLinePlugin);
+            goalLineRegistered = true;
+        }
+
+        // ---------- 心情 × 效率关联 ----------
+        // 诚实处理：样本量不足时不显示结论，只提示继续记录
+        const MOOD_EFFICIENCY_MIN_SAMPLES = 5;
+
+        function computeMoodEfficiency() {
+            const allMood = JSON.parse(localStorage.getItem('moodData') || '{}');
+            const buckets = { happy: [], okay: [], bad: [] };
+
+            Object.keys(allMood).forEach(date => {
+                const moodDay = allMood[date];
+                const records = moodDay?.records || [];
+                if (!records.length) return;
+                // 当天记录的心情：取出现次数最多的一个
+                const tally = {};
+                records.forEach(r => { tally[r.mood] = (tally[r.mood] || 0) + 1; });
+                const topMood = Object.keys(tally).sort((a, b) => tally[b] - tally[a])[0];
+                if (!buckets[topMood]) return;
+
+                const minutes = ((workData.records?.[date]?.workSessions) || [])
+                    .reduce((s, x) => s + (x.duration || 0), 0);
+                if (minutes > 0) buckets[topMood].push(minutes / 60);
+            });
+
+            const total = buckets.happy.length + buckets.okay.length + buckets.bad.length;
+            const avg = (arr) => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : null;
+            return {
+                total,
+                happy: { n: buckets.happy.length, avg: avg(buckets.happy) },
+                okay: { n: buckets.okay.length, avg: avg(buckets.okay) },
+                bad: { n: buckets.bad.length, avg: avg(buckets.bad) }
+            };
+        }
+
+        function renderMoodEfficiency() {
+            const body = document.getElementById('mood-efficiency-body');
+            const sampleEl = document.getElementById('mood-efficiency-sample');
+            if (!body) return;
+
+            const res = computeMoodEfficiency();
+            if (sampleEl) sampleEl.textContent = res.total > 0 ? res.total + ' 个有效样本' : '还没有样本';
+
+            if (res.total < MOOD_EFFICIENCY_MIN_SAMPLES) {
+                body.innerHTML =
+                    '<p class="text-sm text-gray-500 leading-relaxed">同时记录心情和工作，至少积累 ' +
+                    MOOD_EFFICIENCY_MIN_SAMPLES + ' 天才能看出倾向。' +
+                    (res.total > 0 ? '现在有 ' + res.total + ' 天 —— 先继续记，不急着下结论。' : '现在从记录心情开始。') +
+                    '</p>';
+                return;
+            }
+
+            const rows = [
+                { key: 'happy', label: '😊 开心的日子', emoji: '😊' },
+                { key: 'okay', label: '😐 还行的日子', emoji: '😐' },
+                { key: 'bad', label: '😫 烦的日子', emoji: '😫' }
+            ].filter(r => res[r.key].n > 0);
+
+            let html = '<div class="insight-card">';
+            rows.forEach(r => {
+                const item = res[r.key];
+                html += '<div class="insight-row">' +
+                    '<span class="insight-row__label">' + r.label + '（' + item.n + ' 天）</span>' +
+                    '<span class="insight-row__value">' + (item.avg === null ? '—' : item.avg.toFixed(1) + ' 小时') + '</span>' +
+                    '</div>';
+            });
+            html += '</div>';
+
+            // 差值只在两组样本都足够时给出
+            const enough = (a, b) => res[a].n >= MOOD_EFFICIENCY_MIN_SAMPLES && res[b].n >= MOOD_EFFICIENCY_MIN_SAMPLES;
+            if (enough('happy', 'bad') && res.happy.avg !== null && res.bad.avg !== null) {
+                const diff = res.happy.avg - res.bad.avg;
+                const sign = diff >= 0 ? '多' : '少';
+                html += '<p class="insight-note">心情好的日子平均比心情差的日子' + sign + '专注 ' +
+                    Math.abs(diff).toFixed(1) + ' 小时。这是相关，不是因果 —— ' +
+                    '也可能忙的时候本来就更容易烦。</p>';
+            } else {
+                html += '<p class="insight-note">样本还不足以比较两种状态，先继续记录。</p>';
+            }
+
+            body.innerHTML = html;
+        }
+
+        // ---------- 周回顾：成果卡 ----------
+        function renderWeeklyReviewCards() {
+            const host = document.getElementById('weekly-review-cards');
+            if (!host) return;
+
+            const dates = getStatsRangeDates('week');
+            const set = new Set(dates);
+            const daily = [];
+
+            let totalMinutes = 0;
+            let longest = 0;
+            const projectMinutes = {};
+            dates.forEach(key => {
+                const sessions = (workData.records?.[key]?.workSessions) || [];
+                let dayMinutes = 0;
+                sessions.forEach(s => {
+                    dayMinutes += s.duration || 0;
+                    if ((s.duration || 0) > longest) longest = s.duration || 0;
+                    const pid = s.projectId || '未分类';
+                    projectMinutes[pid] = (projectMinutes[pid] || 0) + (s.duration || 0);
+                });
+                totalMinutes += dayMinutes;
+                daily.push(dayMinutes / 60);
+            });
+
+            const doneTodos = (todoData.completed || []).length;
+            const doneMilestones = (milestoneData.items || []).filter(m => m.status === 'done').length;
+
+            let topProject = '—';
+            let topMinutes = 0;
+            Object.keys(projectMinutes).forEach(pid => {
+                if (projectMinutes[pid] > topMinutes) {
+                    topMinutes = projectMinutes[pid];
+                    const p = getProject(pid);
+                    topProject = p ? p.name : '未分类';
+                }
+            });
+
+            const maxDaily = Math.max.apply(null, daily.concat([0.01]));
+            const spark = daily.map(v =>
+                '<i style="height:' + Math.max(8, Math.round((v / maxDaily) * 22)) + 'px"></i>'
+            ).join('');
+
+            const cards = [
+                { label: '本周专注', value: (totalMinutes / 60).toFixed(1) + ' h', sub: '共 ' + Math.round(totalMinutes) + ' 分钟', spark },
+                { label: '最长一段', value: longest + ' 分', sub: '单段连续专注' },
+                { label: '投入最多的项目', value: escapeHtml(topProject), sub: topMinutes ? (topMinutes / 60).toFixed(1) + ' 小时' : '暂无' },
+                { label: '完成事项', value: doneTodos + ' 项', sub: '待办完成' },
+                { label: '完成里程碑', value: doneMilestones + ' 个', sub: '科研推进' }
+            ];
+
+            host.innerHTML = cards.map(c =>
+                '<div class="review-card">' +
+                    '<div class="review-card__label">' + c.label + '</div>' +
+                    '<div class="review-card__value">' + c.value + '</div>' +
+                    '<div class="review-card__sub">' + c.sub + '</div>' +
+                    (c.spark ? '<div class="review-card__spark">' + c.spark + '</div>' : '') +
+                '</div>'
+            ).join('');
+        }
+
+        // ============================================================
+        // P1 微交互：滚动进度条 / 图表联动 / 错落入场
+        // ============================================================
+
+        // ---------- 滚动进度条 ----------
+        function initScrollProgress() {
+            let bar = document.getElementById('scroll-progress');
+            if (!bar) {
+                bar = document.createElement('div');
+                bar.id = 'scroll-progress';
+                document.body.appendChild(bar);
+            }
+            let ticking = false;
+            const update = () => {
+                const doc = document.documentElement;
+                const max = doc.scrollHeight - doc.clientHeight;
+                const ratio = max > 0 ? Math.min(1, Math.max(0, doc.scrollTop / max)) : 0;
+                bar.style.transform = 'scaleX(' + ratio + ')';
+                ticking = false;
+            };
+            window.addEventListener('scroll', () => {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(update);
+            }, { passive: true });
+            window.addEventListener('resize', update, { passive: true });
+            update();
+        }
+
+        // ---------- 错落入场：区块首次进入视口时播放一次 ----------
+        const staggerObserver = (() => {
+            let observer = null;
+            const ensure = () => {
+                if (observer || !('IntersectionObserver' in window)) return observer;
+                observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) return;
+                        entry.target.classList.add('is-revealed');
+                        observer.unobserve(entry.target);
+                    });
+                }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+                return observer;
+            };
+
+            return {
+                observe(root) {
+                    if (!root) return;
+                    if (!('IntersectionObserver' in window)) {
+                        root.querySelectorAll('[data-stagger]').forEach(el => el.classList.add('is-revealed'));
+                        return;
+                    }
+                    const obs = ensure();
+                    root.querySelectorAll('[data-stagger]').forEach(el => {
+                        if (el.classList.contains('is-revealed')) return;
+                        obs.observe(el);
+                    });
+                },
+                reset(root) {
+                    if (!root) return;
+                    root.querySelectorAll('[data-stagger]').forEach(el => {
+                        el.classList.remove('is-revealed');
+                    });
+                }
+            };
+        })();
+
+        // ---------- 图表联动：多图共享 crosshair ----------
+        const chartLink = {
+            charts: [],
+            activeIndex: null,
+            register(chart, datasetIndex) {
+                if (!chart) return;
+                this.charts.push({ chart, datasetIndex: datasetIndex || 0 });
+            },
+            reset() {
+                this.charts = [];
+                this.activeIndex = null;
+            },
+            setActive(index) {
+                if (this.activeIndex === index) return;
+                this.activeIndex = index;
+                this.charts.forEach(entry => {
+                    const chart = entry.chart;
+                    if (!chart || !chart.data) return;
+                    const active = index === null ? [] : [index];
+                    chart.setActiveElements(active);
+                    chart.tooltip?.setActiveElements(active, { x: 0, y: 0 });
+                    chart.update('none');
+                });
+            }
+        };
+
+        // 图表实例创建后立即注册联动；复用已有实例时不重复注册
+        function registerChartForLink(chart) {
+            if (!chart || chart.__gssmLinked) return;
+            chart.__gssmLinked = true;
+            chartLink.register(chart, 0);
+            const canvas = chart.canvas;
+            if (!canvas) return;
+            canvas.addEventListener('mousemove', (evt) => {
+                const points = chart.getElementsAtEventForMode(evt, 'index', { intersect: false }, false);
+                if (points && points.length) {
+                    chartLink.setActive(points[0].index);
+                }
+            });
+            canvas.addEventListener('mouseleave', () => chartLink.setActive(null));
+        }
+
+        // ============================================================
+        // 反馈闭环：成就 / 连续打卡 / 鼓励语 / 空状态
+        // ============================================================
+
+        // ---------- 成就定义 ----------
+        // 只做「具体行为的正反馈」，不设等级、不设分数、不做排行榜。
+        const ACHIEVEMENTS = [
+            // 首次体验
+            { id: 'first-work', icon: '🌱', name: '第一段专注', desc: '完成了第一次工作记录', group: '开始' },
+            { id: 'first-mood', icon: '🎭', name: '第一次记录心情', desc: '开始关注自己的状态', group: '开始' },
+            { id: 'first-reflection', icon: '📝', name: '写下了第一篇三问', desc: '复盘从记录开始', group: '开始' },
+            { id: 'first-milestone', icon: '🚩', name: '立下第一个里程碑', desc: '把想法变成了计划', group: '开始' },
+            // 坚持
+            { id: 'streak-3', icon: '🔥', name: '连续三天', desc: '连续记录工作 3 天', group: '坚持' },
+            { id: 'streak-7', icon: '🔥', name: '连续一周', desc: '连续记录工作 7 天', group: '坚持' },
+            { id: 'streak-30', icon: '🏔️', name: '连续一个月', desc: '连续记录工作 30 天', group: '坚持' },
+            // 产出
+            { id: 'hours-10', icon: '⏱️', name: '十小时', desc: '累计工作满 10 小时', group: '产出' },
+            { id: 'hours-50', icon: '⏳', name: '五十小时', desc: '累计工作满 50 小时', group: '产出' },
+            { id: 'hours-100', icon: '🏆', name: '一百小时', desc: '累计工作满 100 小时', group: '产出' },
+            { id: 'day-6h', icon: '💪', name: '长时段', desc: '单日工作超过 6 小时', group: '产出' },
+            { id: 'milestone-done', icon: '✅', name: '完成一个里程碑', desc: '把计划变成了完成', group: '产出' },
+            // 关怀
+            { id: 'water-8', icon: '💧', name: '喝足了水', desc: '单日饮水达到 8 杯', group: '关怀' },
+            { id: 'rest-3', icon: '🌿', name: '懂得休息', desc: '单日记录 3 段休息', group: '关怀' },
+            { id: 'weekly-review', icon: '📊', name: '周回顾', desc: '生成了一次周回顾', group: '关怀' }
+        ];
+
+        let achievementData = { unlocked: {} };   // { id: { at: 'YYYY-MM-DD HH:mm' } }
+        let achievementQueue = [];
+
+        function loadAchievements() {
+            try {
+                const raw = localStorage.getItem('achievementData');
+                if (!raw) return;
+                const parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === 'object' && parsed.unlocked && typeof parsed.unlocked === 'object') {
+                    achievementData = { unlocked: parsed.unlocked };
+                }
+            } catch (error) {
+                achievementData = { unlocked: {} };
+            }
+        }
+
+        function saveAchievements() {
+            try {
+                localStorage.setItem('achievementData', JSON.stringify(achievementData));
+            } catch (error) {
+                // 存储空间不足时不阻断主流程
+            }
+        }
+
+        function isAchievementUnlocked(id) {
+            return Object.prototype.hasOwnProperty.call(achievementData.unlocked, id);
+        }
+
+        // 成就判定上下文：所有判定函数只读现有数据，不额外存储
+        function getAchievementContext() {
+            const today = getTodayString();
+            const totalMinutes = Object.values(workData.records || {}).reduce((sum, day) => {
+                return sum + (day.workSessions || []).reduce((s, x) => s + (x.duration || 0), 0);
+            }, 0);
+            const todayMinutes = ((workData.records || {})[today]?.workSessions || [])
+                .reduce((s, x) => s + (x.duration || 0), 0);
+            const todayRests = ((workData.records || {})[today]?.restSessions || []).length;
+            const todayWater = ((intakeData.water.records || {})[today]?.count) || 0;
+            const doneMilestones = (milestoneData.items || []).filter(m => m.status === 'done').length;
+            const totalMilestones = (milestoneData.items || []).length;
+
+            return {
+                totalMinutes,
+                todayMinutes,
+                todayRests,
+                todayWater,
+                doneMilestones,
+                totalMilestones,
+                streak: computeWorkStreak()
+            };
+        }
+
+        // 判定全部成就，返回新解锁的 id 列表
+        function evaluateAchievements() {
+            const ctx = getAchievementContext();
+            const allMood = JSON.parse(localStorage.getItem('moodData') || '{}');
+            const moodDayCount = Object.keys(allMood).filter(k => (allMood[k]?.records || []).length > 0).length;
+            const reflectionAll = JSON.parse(localStorage.getItem('reflectionData') || '{}');
+            const reflectionDayCount = Object.keys(reflectionAll).filter(k => {
+                const r = reflectionAll[k] || {};
+                return (r.progress || r.stuck || r.tomorrow || '').toString().trim().length > 0;
+            }).length;
+
+            const rules = {
+                'first-work': () => ctx.totalMinutes > 0,
+                'first-mood': () => moodDayCount > 0,
+                'first-reflection': () => reflectionDayCount > 0,
+                'first-milestone': () => ctx.totalMilestones > 0,
+                'streak-3': () => ctx.streak.current >= 3,
+                'streak-7': () => ctx.streak.current >= 7,
+                'streak-30': () => ctx.streak.current >= 30,
+                'hours-10': () => ctx.totalMinutes >= 600,
+                'hours-50': () => ctx.totalMinutes >= 3000,
+                'hours-100': () => ctx.totalMinutes >= 6000,
+                'day-6h': () => ctx.todayMinutes >= 360,
+                'milestone-done': () => ctx.doneMilestones > 0,
+                'water-8': () => ctx.todayWater >= 8,
+                'rest-3': () => ctx.todayRests >= 3,
+                'weekly-review': () => ctx.doneMilestones >= 0 && !!window.__gssmWeeklyReviewDone
+            };
+
+            const newly = [];
+            ACHIEVEMENTS.forEach(item => {
+                if (isAchievementUnlocked(item.id)) return;
+                const rule = rules[item.id];
+                if (!rule) return;
+                let ok = false;
+                try { ok = !!rule(); } catch (error) { ok = false; }
+                if (ok) newly.push(item);
+            });
+            return newly;
+        }
+
+        function unlockAchievements() {
+            const newly = evaluateAchievements();
+            if (!newly.length) return;
+            const stamp = getTodayString() + ' ' + getCurrentTimeString();
+            newly.forEach(item => {
+                achievementData.unlocked[item.id] = { at: stamp };
+                achievementQueue.push(item);
+            });
+            saveAchievements();
+            renderAchievementWall();
+            flushAchievementQueue();
+        }
+
+        function flushAchievementQueue() {
+            if (!achievementQueue.length) return;
+            const item = achievementQueue.shift();
+            showAchievementPopup(item);
+            if (achievementQueue.length) {
+                setTimeout(flushAchievementQueue, 700);
+            }
+        }
+
+        function showAchievementPopup(item) {
+            const layer = document.getElementById('achievement-layer');
+            if (!layer) return;
+            const card = document.createElement('div');
+            card.className = 'achievement-card';
+            card.setAttribute('role', 'status');
+            card.innerHTML =
+                '<div class="achievement-card__icon">' + escapeHtml(item.icon) + '</div>' +
+                '<div class="min-w-0">' +
+                    '<div class="achievement-card__label">成就解锁</div>' +
+                    '<div class="achievement-card__title">' + escapeHtml(item.name) + '</div>' +
+                    '<div class="achievement-card__desc">' + escapeHtml(item.desc) + '</div>' +
+                '</div>';
+            layer.appendChild(card);
+            setTimeout(() => card.remove(), 3000);
+        }
+
+        // ---------- 连续打卡（从 workData 反推，零新增存储） ----------
+        function computeWorkStreak() {
+            const records = workData.records || {};
+            const hasWork = (key) => {
+                const day = records[key];
+                if (!day) return false;
+                return (day.workSessions || []).some(s => (s.duration || 0) > 0);
+            };
+
+            // 从今天往回数；若今天还没开始工作，不算断签
+            const cursor = new Date();
+            let current = 0;
+            if (!hasWork(getTodayString())) {
+                cursor.setDate(cursor.getDate() - 1);
+            }
+            while (hasWork(formatDateKey(cursor))) {
+                current++;
+                cursor.setDate(cursor.getDate() - 1);
+            }
+
+            // 历史最长连续
+            const keys = Object.keys(records).filter(hasWork).sort();
+            let longest = 0;
+            let run = 0;
+            let prev = null;
+            keys.forEach(k => {
+                const d = new Date(k + 'T00:00:00');
+                if (prev && Math.round((d - prev) / 86400000) === 1) {
+                    run++;
+                } else {
+                    run = 1;
+                }
+                longest = Math.max(longest, run);
+                prev = d;
+            });
+
+            return { current, longest, hasToday: hasWork(getTodayString()) };
+        }
+
+        function renderStreak() {
+            const host = document.getElementById('streak-panel');
+            if (!host) return;
+            const streak = computeWorkStreak();
+            const records = workData.records || {};
+
+            const cells = [];
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                const key = formatDateKey(d);
+                const day = records[key];
+                const on = !!day && (day.workSessions || []).some(s => (s.duration || 0) > 0);
+                const isToday = i === 0;
+                cells.push('<div class="streak-cell' + (on ? ' is-on' : '') + (isToday ? ' is-today' : '') + '" title="' + key + '"></div>');
+            }
+
+            const head = streak.current > 0
+                ? '<span class="streak-flame">🔥</span><span class="font-semibold text-gray-800 text-sm">连续 ' + streak.current + ' 天</span>'
+                : '<span class="streak-flame">🌱</span><span class="font-semibold text-gray-700 text-sm">今天还没开始</span>';
+
+            const sub = streak.current > 0
+                ? '最长 ' + streak.longest + ' 天'
+                : (streak.longest > 0 ? '此前最长 ' + streak.longest + ' 天' : '记下第一段专注，今天就开始');
+
+            host.innerHTML =
+                '<div class="flex items-center justify-between mb-2.5">' +
+                    '<h3 class="text-[11px] font-semibold text-gray-500 uppercase tracking-[.16em]">连续记录</h3>' +
+                    '<span class="text-[10px] text-gray-400">最近 7 天</span>' +
+                '</div>' +
+                '<div class="flex items-center gap-2.5 mb-2.5">' + head +
+                    '<span class="text-xs text-gray-400">· ' + escapeHtml(sub) + '</span>' +
+                '</div>' +
+                '<div class="streak-strip">' + cells.join('') + '</div>';
+        }
+
+        // ---------- 数据驱动的鼓励语 ----------
+        function renderEncouragement() {
+            const host = document.getElementById('encourage-line');
+            if (!host) return;
+
+            const today = getTodayString();
+            const todayMinutes = (((workData.records || {})[today]?.workSessions) || [])
+                .reduce((s, x) => s + (x.duration || 0), 0);
+
+            // 最近 7 天（不含今天）日均工作分钟
+            const keys = Object.keys(workData.records || {}).filter(k => k !== today);
+            const recent = keys.slice(-7);
+            let recentMinutes = 0;
+            recent.forEach(k => {
+                recentMinutes += ((workData.records[k]?.workSessions) || []).reduce((s, x) => s + (x.duration || 0), 0);
+            });
+            const avgMinutes = recent.length ? recentMinutes / recent.length : 0;
+
+            const mood = currentMoodStart?.mood || (moodData.records.length ? moodData.records[moodData.records.length - 1].mood : null);
+
+            let text;
+            if (todayMinutes > 0 && avgMinutes > 0) {
+                const diff = todayMinutes - avgMinutes;
+                const hm = formatMinutesHM(todayMinutes);
+                if (diff >= 20) {
+                    text = '今天已专注 ' + hm + '，比最近 7 天日均多 ' + formatMinutesHM(Math.round(diff)) + '。';
+                } else if (diff <= -20) {
+                    text = '今天已专注 ' + hm + '，比最近 7 天日均少一些 —— 节奏比强度更重要。';
+                } else {
+                    text = '今天已专注 ' + hm + '，和最近的节奏差不多。';
+                }
+            } else if (todayMinutes > 0) {
+                text = '今天已专注 ' + formatMinutesHM(todayMinutes) + '。';
+            } else if (mood === 'bad') {
+                text = '今天有点难，先喝口水。';
+            } else if (mood === 'okay') {
+                text = '今天状态一般，从一段 25 分钟开始就好。';
+            } else if (mood === 'happy') {
+                text = '今天心情不错，还没开始记录 —— 从一段 25 分钟开始就好。';
+            } else {
+                text = '还没有记录 —— 从一段 25 分钟开始就好。';
+            }
+
+            host.innerHTML = '<span class="encourage-line__dot"></span><span>' + escapeHtml(text) + '</span>';
+        }
+
+        function formatMinutesHM(minutes) {
+            const m = Math.max(0, Math.round(minutes));
+            if (m < 60) return m + ' 分钟';
+            const h = Math.floor(m / 60);
+            const rest = m % 60;
+            return rest ? h + ' 小时 ' + rest + ' 分' : h + ' 小时';
+        }
+
+        // ---------- 成就墙 ----------
+        function renderAchievementWall() {
+            const host = document.getElementById('achievement-wall');
+            if (!host) return;
+            const unlockedCount = Object.keys(achievementData.unlocked).length;
+            const total = ACHIEVEMENTS.length;
+
+            const groups = {};
+            ACHIEVEMENTS.forEach(item => {
+                if (!groups[item.group]) groups[item.group] = [];
+                groups[item.group].push(item);
+            });
+
+            let html = '<div class="flex items-center justify-between mb-3">' +
+                '<h3 class="text-[11px] font-semibold text-gray-500 uppercase tracking-[.16em]">成就</h3>' +
+                '<span class="text-[10px] text-gray-400">' + unlockedCount + ' / ' + total + '</span>' +
+                '</div>';
+
+            Object.keys(groups).forEach(group => {
+                html += '<div class="mb-3 last:mb-0">';
+                html += '<div class="text-[10px] text-gray-400 mb-1.5">' + escapeHtml(group) + '</div>';
+                html += '<div class="grid grid-cols-4 gap-1.5">';
+                groups[group].forEach(item => {
+                    const on = isAchievementUnlocked(item.id);
+                    const at = on ? (achievementData.unlocked[item.id]?.at || '') : '';
+                    html += '<div class="ach-chip' + (on ? ' is-on' : '') + '" title="' +
+                        escapeHtml(on ? (item.name + ' · ' + item.desc + (at ? ' · ' + at : '')) : '未解锁：' + item.desc) + '">' +
+                        '<span class="ach-chip__icon">' + escapeHtml(on ? item.icon : '·') + '</span>' +
+                        '</div>';
+                });
+                html += '</div></div>';
+            });
+
+            host.innerHTML = html;
+        }
+
+        // ---------- 空状态 ----------
+        function emptyStateHtml(title, hint, action) {
+            const icon =
+                '<svg viewBox="0 0 48 48" fill="none" aria-hidden="true">' +
+                    '<circle cx="24" cy="24" r="15" stroke="currentColor" stroke-width="2" opacity=".28"/>' +
+                    '<path d="M24 15v9l6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".55"/>' +
+                '</svg>';
+            const btn = action
+                ? '<button type="button" class="btn btn--sm btn--primary" onclick="' + escapeHtml(action.onclick) + '">' +
+                    escapeHtml(action.label) + '</button>'
+                : '';
+            return '<div class="empty-state">' + icon +
+                '<div class="empty-state__title">' + escapeHtml(title) + '</div>' +
+                '<div class="empty-state__hint">' + escapeHtml(hint) + '</div>' + btn +
+                '</div>';
+        }
 
         // 初始化心情模块
         function initMood() {
@@ -3959,6 +5523,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
                     startTime: now
                 };
                 setMoodDisplay(mood, '记录中...');
+                renderEncouragement();
+                unlockAchievements();
             } else {
                 // 第二次点击：结束上一个心情，开始新心情
                 const record = {
@@ -3976,6 +5542,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
                 saveMoodData();
                 setMoodDisplay(mood, '记录中...');
                 renderMoodTimeline();
+                renderEncouragement();
+                unlockAchievements();
             }
         }
 
@@ -4140,6 +5708,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
         }
 
         function updateStatisticsCharts(period) {
+            // 图表实例可能新建或复用，刷新后通知联动层重新注册
+            setTimeout(() => document.dispatchEvent(new CustomEvent('gssm:charts-ready')), 0);
             statsPeriod = period;
             const { startDate, endDate, labels } = getDateRange(period);
             updateWorkChart(labels, prepareWorkData(startDate, endDate, labels));
@@ -4150,6 +5720,9 @@ Check your Browserslist config to be sure that your targets are set up correctly
             updateProjectChart(startDate, endDate);
             updateWorkRhythm(startDate, endDate);
             updateSummaryStatistics();
+            // 统一注册联动（图表可能是新建也可能是复用）
+            [window.workChart, window.restChart, window.coffeeChart, window.waterChart, window.exerciseChart]
+                .forEach(registerChartForLink);
         }
 
         function getDateRange(period) {
@@ -4291,6 +5864,13 @@ Check your Browserslist config to be sure that your targets are set up correctly
             return data;
         }
 
+        // 同步目标线：插件是全局注册的，这里只需触发一次重绘
+        function syncGoalLine() {
+            registerGoalLinePlugin();
+            if (!window.workChart) return;
+            window.workChart.update('none');
+        }
+
         function updateWorkChart(labels, data) {
             const canvas = document.getElementById('work-duration-chart');
             if (!canvas) return;
@@ -4298,6 +5878,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
                 window.workChart.data.labels = labels;
                 window.workChart.data.datasets[0].data = data;
                 window.workChart.update();
+                syncGoalLine();
                 return;
             }
             window.workChart = new Chart(canvas.getContext('2d'), {
@@ -4305,6 +5886,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
                 data: { labels, datasets: [{ label: '工作时长(小时)', data, backgroundColor: 'rgba(16, 185, 129, 0.75)', borderRadius: 6, maxBarThickness: 46 }] },
                 options: chartOptions({ y: { beginAtZero: true, title: { display: true, text: '小时' } } }, { display: false })
             });
+            syncGoalLine();
+            registerChartForLink(window.workChart);
         }
 
         function updateRestChart(labels, data) {
@@ -4321,6 +5904,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
                 data: { labels, datasets: [{ label: '休息时长(小时)', data, backgroundColor: 'rgba(249, 115, 22, 0.75)', borderRadius: 6, maxBarThickness: 46 }] },
                 options: chartOptions({ y: { beginAtZero: true, title: { display: true, text: '小时' } } }, { display: false })
             });
+            registerChartForLink(window.restChart);
         }
 
         function updateCoffeeChart(labels, cupData, caffeineData) {
@@ -4350,6 +5934,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
                     }
                 })
             });
+            registerChartForLink(window.coffeeChart);
         }
 
         function updateWaterChart(labels, data) {
@@ -4366,6 +5951,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
                 data: { labels, datasets: [{ label: '饮水(ml)', data, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.12)', fill: true, tension: 0.35, borderWidth: 2, pointRadius: 3, pointHoverRadius: 5, pointBackgroundColor: '#3b82f6' }] },
                 options: chartOptions({ y: { beginAtZero: true, title: { display: true, text: 'ml' } } }, { display: false })
             });
+            registerChartForLink(window.waterChart);
         }
 
         function updateExerciseChart(labels, countData, caloriesData) {
@@ -4394,6 +5980,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
                     }
                 })
             });
+            registerChartForLink(window.exerciseChart);
         }
 
         // 列出统计区间内的真实日期（图表为抽样显示，汇总按完整区间统计）
@@ -4441,6 +6028,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
 
         // 汇总卡与上方图表同口径：只统计当前区间内的数据
         function updateSummaryStatistics() {
+            renderMoodEfficiency();
+            renderGoalProgress();
             const dates = getStatsRangeDates(statsPeriod);
             const inRange = new Set(dates);
 
@@ -4803,6 +6392,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
                 '</div>';
             }).join('');
 
+            staggerObserver.observe(container);
+
             container.querySelectorAll('[data-add-status]').forEach(btn => {
                 btn.addEventListener('click', function() {
                     openMilestoneModal(null, this.getAttribute('data-add-status'));
@@ -4824,7 +6415,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
             const blocker = (m.blocker && m.blocker !== '无')
                 ? '<div class="mt-1.5"><span class="text-xs px-2 py-0.5 rounded bg-red-50 text-red-600">' + escapeHtml(m.blocker) + '</span></div>'
                 : '';
-            return '<div class="board-card bg-white rounded-lg p-3 border border-gray-200 shadow-sm">' +
+            return '<div class="board-card stagger-item bg-white rounded-lg p-3 border border-gray-200 shadow-sm" data-stagger>' +
                 '<div class="flex items-start justify-between gap-2">' +
                     '<div class="text-sm font-medium text-gray-800 break-words">' + escapeHtml(m.title) + '</div>' +
                     '<button type="button" class="text-gray-400 hover:text-primary text-xs shrink-0" data-edit-id="' + m.id + '">编辑</button>' +
@@ -4904,6 +6495,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
             renderMilestones();
             closeMilestoneModal();
             showToast('已保存');
+            unlockAchievements();
         }
 
         function moveMilestone(id, dir) {
@@ -4915,6 +6507,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
             item.updatedAt = new Date().toISOString();
             saveData();
             renderMilestones();
+            unlockAchievements();
         }
 
         function deleteMilestone() {
@@ -5793,6 +7386,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
             saveData();
             const status = document.getElementById('reflection-status');
             if (status) status.textContent = '已保存';
+            unlockAchievements();
         }
 
         // ---------- 咖啡因代谢 ----------
@@ -6093,7 +7687,10 @@ Check your Browserslist config to be sure that your targets are set up correctly
 
         function openWeeklyReview() {
             document.getElementById('weekly-review-text').textContent = buildWeeklyReview();
+            renderWeeklyReviewCards();
             openModalEl('weekly-review-modal');
+            window.__gssmWeeklyReviewDone = true;
+            unlockAchievements();
         }
 
         // ---------- 批量导入 ----------
@@ -6469,9 +8066,11 @@ Check your Browserslist config to be sure that your targets are set up correctly
             cmds.push({ group: '操作', label: '记录一杯咖啡', icon: 'fa-coffee', keywords: '咖啡 饮品 摄入 咖啡因', run: () => { showSection('body-section'); setTimeout(() => document.getElementById('add-coffee')?.click(), 160); } });
             cmds.push({ group: '操作', label: '记录一杯水', icon: 'fa-tint', keywords: '水 饮水 喝 摄入', run: () => { showSection('body-section'); setTimeout(() => document.getElementById('add-water')?.click(), 160); } });
             cmds.push({ group: '操作', label: '导出数据备份', icon: 'fa-download', keywords: '导出 备份 保存 json', run: () => exportAppData() });
+            cmds.push({ group: '操作', label: '键盘快捷键', icon: 'fa-keyboard-o', keywords: '快捷键 键盘 keyboard 面板', run: () => openShortcutModal() });
             cmds.push({ group: '统计', label: '统计：本周', icon: 'fa-calendar', keywords: '统计 周期 本周 week', run: () => { showSection('stats-section'); switchStatsPeriod('week'); } });
             cmds.push({ group: '统计', label: '统计：本月', icon: 'fa-calendar', keywords: '统计 周期 本月 month', run: () => { showSection('stats-section'); switchStatsPeriod('month'); } });
             cmds.push({ group: '统计', label: '统计：本年', icon: 'fa-calendar', keywords: '统计 周期 本年 year', run: () => { showSection('stats-section'); switchStatsPeriod('year'); } });
+            cmds.push({ group: '统计', label: '设置工作目标', icon: 'fa-bullseye', keywords: '目标 计划 goal 每日 每周', run: () => { showSection('stats-section'); setTimeout(() => document.getElementById('goal-daily-hours')?.focus(), 200); } });
 
             return cmds;
         }
