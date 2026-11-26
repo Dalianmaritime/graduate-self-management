@@ -785,6 +785,438 @@ Check your Browserslist config to be sure that your targets are set up correctly
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7);
         }
 
+        /* ---------- 仪式感：欢迎 / 下班 / 周打卡 / 名言 ---------- */
+        /* 每日欢迎：全屏大图 + 渐入 */
+        #welcome-ritual {
+            position: fixed;
+            inset: 0;
+            z-index: 95;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #0b1220;
+            cursor: pointer;
+        }
+        #welcome-ritual:not(.hidden) { display: flex; }
+        #welcome-ritual.is-closing {
+            animation: ritualFadeOut var(--d-4) var(--ease) forwards;
+        }
+        @keyframes ritualFadeOut {
+            to { opacity: 0; transform: scale(1.03); visibility: hidden; }
+        }
+        .welcome-shot {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center 38%;
+            /* 缓慢呼吸式缩放：只动 background-position，避免 transform 合成层导致的重采样模糊 */
+            animation: welcomeBreathe 18s ease-in-out infinite alternate;
+        }
+        @keyframes welcomeBreathe {
+            from { background-position: center 34%; }
+            to { background-position: center 44%; }
+        }
+        .welcome-shot::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(58% 46% at 50% 50%, rgba(11, 18, 32, .34) 0%, rgba(11, 18, 32, .12) 55%, rgba(11, 18, 32, 0) 78%),
+                linear-gradient(180deg, rgba(11, 18, 32, .30) 0%, rgba(11, 18, 32, .06) 45%, rgba(11, 18, 32, .34) 100%);
+        }
+        /* 卡片后方柔光：用独立元素而非负 z-index 伪元素，避免触发 backdrop root 模糊 */
+        .welcome-card__glow {
+            position: absolute;
+            inset: -14% -12%;
+            z-index: -1;
+            border-radius: 50%;
+            background: radial-gradient(60% 55% at 50% 50%, rgba(11, 18, 32, .5) 0%, rgba(11, 18, 32, 0) 72%);
+            pointer-events: none;
+        }
+        .welcome-hint {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .85rem;
+            color: #fff;
+            text-align: center;
+            padding: 2.4rem 2.6rem;
+            border-radius: 28px;
+            background: rgba(11, 18, 32, .34);
+            backdrop-filter: blur(14px) saturate(1.2);
+            -webkit-backdrop-filter: blur(14px) saturate(1.2);
+            box-shadow: 0 26px 60px -24px rgba(0, 0, 0, .55);
+            animation: welcomeHint var(--d-4) var(--ease) .35s both;
+        }
+        @keyframes welcomeHint {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: none; }
+        }
+        .welcome-hint__title {
+            font-size: clamp(1.5rem, 4vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: -.01em;
+            text-shadow: 0 3px 18px rgba(0, 0, 0, .5);
+        }
+        .welcome-hint__sub {
+            font-size: .9rem;
+            color: rgba(255, 255, 255, .88);
+            text-shadow: 0 2px 12px rgba(0, 0, 0, .45);
+        }
+        .welcome-tap {
+            margin-top: .35rem;
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            padding: .5rem .95rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, .38);
+            background: rgba(255, 255, 255, .12);
+            backdrop-filter: blur(10px);
+            font-size: .8rem;
+            color: #fff;
+            animation: welcomePulse 2.4s var(--ease-soft) infinite;
+        }
+        @keyframes welcomePulse {
+            0%, 100% { transform: scale(1); opacity: .9; }
+            50% { transform: scale(1.045); opacity: 1; }
+        }
+
+        /* welcome 展开后的卡片 */
+        .welcome-card {
+            position: relative;
+            z-index: 3;
+            width: min(92vw, 460px);
+            padding: 2rem 1.9rem;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, .97);
+            border: 1px solid rgba(255, 255, 255, .9);
+            box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .6);
+            animation: welcomeCard var(--d-4) var(--ease) both;
+            text-align: center;
+        }
+        @keyframes welcomeCard {
+            from { opacity: 0; transform: translateY(20px) scale(.96); }
+            to { opacity: 1; transform: none; }
+        }
+        .welcome-card__greet {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: -.01em;
+        }
+        .welcome-card__date {
+            font-size: .8rem;
+            color: var(--ink-3);
+            margin-top: .35rem;
+        }
+        .welcome-card__quote {
+            margin-top: 1.15rem;
+            padding: .85rem 1rem;
+            border-radius: var(--r-md);
+            background: var(--brand-soft);
+            border: 1px solid rgba(26, 86, 219, .14);
+            font-size: .87rem;
+            line-height: 1.65;
+            color: var(--ink-2);
+        }
+        .welcome-card__quote cite {
+            display: block;
+            margin-top: .4rem;
+            font-size: .72rem;
+            font-style: normal;
+            color: var(--ink-3);
+        }
+        .welcome-card__stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: .5rem;
+            margin-top: 1.15rem;
+        }
+        .welcome-card__stat {
+            padding: .6rem .35rem;
+            border-radius: var(--r-sm);
+            background: var(--surface-2);
+            border: 1px solid var(--line);
+        }
+        .welcome-card__stat b {
+            display: block;
+            font-size: 1.15rem;
+            color: var(--ink);
+            font-variant-numeric: tabular-nums;
+        }
+        .welcome-card__stat span {
+            font-size: .68rem;
+            color: var(--ink-3);
+        }
+
+        /* 下班仪式 */
+        .offwork-panel {
+            position: fixed;
+            right: 1rem;
+            bottom: calc(1rem + env(safe-area-inset-bottom));
+            z-index: 82;
+            width: min(92vw, 340px);
+            border-radius: var(--r-lg);
+            background: rgba(255, 255, 255, .95);
+            backdrop-filter: blur(20px) saturate(1.5);
+            -webkit-backdrop-filter: blur(20px) saturate(1.5);
+            border: 1px solid rgba(255, 255, 255, .8);
+            box-shadow: var(--sh-4);
+            overflow: hidden;
+            animation: achIn var(--d-3) var(--ease) both;
+        }
+        .offwork-panel__head {
+            padding: .85rem 1rem .7rem;
+            background: linear-gradient(135deg, #1e293b, #334155);
+            color: #fff;
+        }
+        .offwork-panel__title {
+            font-size: .95rem;
+            font-weight: 700;
+        }
+        .offwork-panel__sub {
+            font-size: .72rem;
+            color: rgba(255, 255, 255, .72);
+            margin-top: .15rem;
+        }
+        .offwork-panel__body {
+            padding: .85rem 1rem;
+            max-height: 46vh;
+            overflow-y: auto;
+        }
+        .offwork-panel__row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: .6rem;
+            padding: .34rem 0;
+            font-size: .8rem;
+            color: var(--ink-2);
+            border-bottom: 1px dashed var(--line);
+        }
+        .offwork-panel__row:last-child { border-bottom: 0; }
+        .offwork-panel__row b {
+            color: var(--ink);
+            font-variant-numeric: tabular-nums;
+        }
+        .offwork-panel__todo {
+            font-size: .76rem;
+            color: var(--ink-3);
+            padding: .3rem 0 .3rem .85rem;
+            position: relative;
+            line-height: 1.5;
+        }
+        .offwork-panel__todo::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: .72rem;
+            width: 5px;
+            height: 5px;
+            border-radius: 999px;
+            background: var(--warn);
+        }
+        .offwork-panel__foot {
+            display: flex;
+            gap: .5rem;
+            padding: .7rem 1rem .9rem;
+        }
+
+        /* 庆祝：下班 */
+        #celebrate-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 96;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(11, 18, 32, .55);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        #celebrate-layer:not(.hidden) { display: flex; }
+        .celebrate-card {
+            position: relative;
+            z-index: 2;
+            width: min(90vw, 380px);
+            padding: 2.1rem 1.6rem;
+            border-radius: 26px;
+            background: linear-gradient(160deg, #ffffff, #f8fafc);
+            box-shadow: 0 50px 100px -30px rgba(0, 0, 0, .65);
+            text-align: center;
+            animation: celebratePop var(--d-4) cubic-bezier(.34, 1.56, .64, 1) both;
+        }
+        @keyframes celebratePop {
+            from { opacity: 0; transform: scale(.72) translateY(24px); }
+            to { opacity: 1; transform: none; }
+        }
+        .celebrate-card__emoji {
+            font-size: 3.4rem;
+            line-height: 1;
+            animation: celebrateSpin 1.1s var(--ease) .18s both;
+        }
+        @keyframes celebrateSpin {
+            0% { transform: scale(.3) rotate(-32deg); }
+            60% { transform: scale(1.22) rotate(12deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+        .celebrate-card__title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--ink);
+            margin-top: .65rem;
+            letter-spacing: -.01em;
+        }
+        .celebrate-card__sub {
+            font-size: .86rem;
+            color: var(--ink-2);
+            margin-top: .4rem;
+            line-height: 1.6;
+        }
+        .celebrate-card__stats {
+            display: flex;
+            justify-content: center;
+            gap: 1.4rem;
+            margin-top: 1.1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--line);
+        }
+        .celebrate-card__stat b {
+            display: block;
+            font-size: 1.25rem;
+            color: var(--ink);
+            font-variant-numeric: tabular-nums;
+        }
+        .celebrate-card__stat span {
+            font-size: .7rem;
+            color: var(--ink-3);
+        }
+
+        /* 彩纸 */
+        .confetti {
+            position: absolute;
+            top: -14px;
+            width: 9px;
+            height: 14px;
+            border-radius: 2px;
+            pointer-events: none;
+            animation: confettiFall linear forwards;
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(760deg); opacity: .1; }
+        }
+
+        /* 上班时的周打卡进度 */
+        .week-strip {
+            display: flex;
+            gap: .5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .week-day {
+            flex: 1;
+            max-width: 54px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .35rem;
+        }
+        .week-day__dot {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            font-size: .9rem;
+            background: var(--surface-3);
+            border: 1px solid var(--line);
+            color: var(--ink-3);
+            transition: transform var(--d-2) var(--ease), background-color var(--d-2) var(--ease);
+        }
+        .week-day.is-on .week-day__dot {
+            background: linear-gradient(150deg, #fbbf24, #f59e0b);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, .32);
+        }
+        .week-day.is-today .week-day__dot {
+            transform: translateY(-3px) scale(1.06);
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, .28);
+        }
+        .week-day__label {
+            font-size: .68rem;
+            color: var(--ink-3);
+        }
+        .week-day.is-on .week-day__label { color: var(--ink-2); font-weight: 600; }
+        .week-banner {
+            margin-top: 1rem;
+            padding: .7rem 1rem;
+            border-radius: var(--r-md);
+            background: linear-gradient(135deg, #fef3c7, #fee2e2);
+            border: 1px solid rgba(245, 158, 11, .28);
+            font-size: .88rem;
+            font-weight: 600;
+            color: #92400e;
+            animation: welcomeHint var(--d-3) var(--ease) .25s both;
+        }
+
+        /* 名言条 */
+        .quote-strip {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            padding: .6rem .85rem;
+            border-radius: var(--r-md);
+            background: rgba(255, 255, 255, .72);
+            border: 1px solid rgba(255, 255, 255, .7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            max-width: 34rem;
+            margin: 0 auto;
+        }
+        .quote-strip__mark {
+            flex: none;
+            font-size: 1.1rem;
+            line-height: 1;
+            color: var(--brand);
+            opacity: .7;
+            font-family: Georgia, serif;
+        }
+        .quote-strip__text {
+            flex: 1;
+            min-width: 0;
+            font-size: .78rem;
+            line-height: 1.55;
+            color: var(--ink-2);
+        }
+        .quote-strip__author {
+            display: block;
+            font-size: .68rem;
+            color: var(--ink-3);
+            margin-top: .1rem;
+        }
+        .quote-strip__btn {
+            flex: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            font-size: .72rem;
+            color: var(--ink-3);
+            transition: background-color var(--d-1) var(--ease), color var(--d-1) var(--ease), transform var(--d-1) var(--ease);
+        }
+        .quote-strip__btn:hover {
+            background: var(--surface-3);
+            color: var(--brand);
+            transform: rotate(15deg);
+        }
+
         /* ---------- P2 键盘与效率 ---------- */
         .prio-bar {
             width: 4px;
@@ -1259,6 +1691,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
                     <!-- 数据驱动的鼓励语 -->
                     <div id="encourage-line" class="encourage-line" role="status"></div>
                 </div>
+                <!-- 每日名言 -->
+                <div id="quote-strip" class="quote-strip mt-3"></div>
             </div>
         </header>
 
@@ -2254,6 +2688,22 @@ Check your Browserslist config to be sure that your targets are set up correctly
     <!-- 成就解锁提示层 -->
     <div id="achievement-layer" aria-live="polite"></div>
 
+    <!-- 每日欢迎仪式 -->
+    <div id="welcome-ritual" class="hidden">
+        <div class="welcome-shot"></div>
+        <div class="welcome-hint">
+            <div class="welcome-hint__title" id="welcome-preview-title">新的一天</div>
+            <div class="welcome-hint__sub" id="welcome-preview-sub">点击任意位置开始</div>
+            <div class="welcome-tap"><i class="fa fa-hand-pointer-o"></i>点击进入</div>
+        </div>
+    </div>
+
+    <!-- 下班庆祝 -->
+    <div id="celebrate-layer" class="hidden"></div>
+
+    <!-- 上班时的周打卡进度 -->
+    <div id="week-progress-modal" class="hidden fixed inset-0 bg-black/40 z-50 flex items-center justify-center px-4"></div>
+
     <!-- 阅读进度条 -->
     <div id="scroll-progress" aria-hidden="true"></div>
 
@@ -2321,6 +2771,27 @@ Check your Browserslist config to be sure that your targets are set up correctly
                     <button id="clear-theme-bg-btn" type="button" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm">恢复默认</button>
                     <input id="theme-bg-input" type="file" accept="image/*" class="hidden">
                 </div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4 mt-4">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="text-sm font-medium text-gray-700">每日名言</div>
+                    <label class="flex items-center gap-1.5 text-xs text-gray-500 cursor-pointer">
+                        <input id="quote-toggle" type="checkbox" class="accent-blue-600">
+                        在首页显示
+                    </label>
+                </div>
+                <div class="text-xs text-gray-400 mt-1 mb-3" id="quote-library-count"></div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex gap-2">
+                        <input id="quote-text-input" type="text" placeholder="名言正文" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                        <input id="quote-author-input" type="text" placeholder="出处" class="w-28 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="quote-add" type="button" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm">添加名言</button>
+                        <button id="quote-manage" type="button" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm">管理自定义</button>
+                    </div>
+                </div>
+                <div id="quote-custom-list" class="mt-3 space-y-1.5"></div>
             </div>
             <div class="flex justify-end mt-6">
                 <button id="theme-close" type="button" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg">关闭</button>
@@ -2473,6 +2944,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
             loadAchievements();
             initScrollProgress();
             initGoals();
+            initRituals();
             initGlobalShortcuts();
             initTodoDragSort();
             renderTodoToolbar();
@@ -2890,6 +3362,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
                 moodData: JSON.parse(localStorage.getItem('moodData') || '{}'),
                 achievementData,
                 goalSettings,
+                quoteSettings,
+                ritualState,
                 activeWorkState: {
                     workState,
                     currentWorkSession,
@@ -2978,6 +3452,23 @@ Check your Browserslist config to be sure that your targets are set up correctly
                     if (parsed.achievementData && typeof parsed.achievementData === 'object' && parsed.achievementData.unlocked) {
                         achievementData = { unlocked: parsed.achievementData.unlocked };
                         saveAchievements();
+                    }
+                    if (parsed.quoteSettings && typeof parsed.quoteSettings === 'object') {
+                        quoteSettings = {
+                            custom: Array.isArray(parsed.quoteSettings.custom) ? parsed.quoteSettings.custom : [],
+                            showOnHero: parsed.quoteSettings.showOnHero !== false
+                        };
+                        saveQuoteSettings();
+                        quoteOfTheDay = pickDailyQuote();
+                        renderQuote();
+                    }
+                    if (parsed.ritualState && typeof parsed.ritualState === 'object') {
+                        ritualState = {
+                            welcomedOn: parsed.ritualState.welcomedOn || '',
+                            offworkDoneOn: parsed.ritualState.offworkDoneOn || '',
+                            weekShownOn: parsed.ritualState.weekShownOn || ''
+                        };
+                        saveRitualState();
                     }
                     if (parsed.goalSettings && typeof parsed.goalSettings === 'object') {
                         goalSettings = {
@@ -3203,6 +3694,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
             updateWorkDisplay();
             showActionEmoji('btn-work', '🐂');
             saveData();
+            showWeekProgressOnStart();
         }
 
         function startRest() {
@@ -4489,6 +4981,512 @@ Check your Browserslist config to be sure that your targets are set up correctly
         // 心情数据结构
         let moodData = { records: [] };
         let currentMoodStart = null; // 当前心情开始时间
+
+        // ============================================================
+        // 仪式感：每日欢迎 / 下班庆祝 / 周打卡进度 / 每日名言
+        // ============================================================
+
+        // ---------- 名言库 ----------
+        // 内置名言均为公认出处；用户可在设置里自定义或增删
+        const QUOTE_LIBRARY = [
+            { text: '路漫漫其修远兮，吾将上下而求索。', author: '屈原《离骚》' },
+            { text: '博学之，审问之，慎思之，明辨之，笃行之。', author: '《礼记·中庸》' },
+            { text: '学而不思则罔，思而不学则殆。', author: '孔子《论语》' },
+            { text: '知之者不如好之者，好之者不如乐之者。', author: '孔子《论语》' },
+            { text: '不积跬步，无以至千里；不积小流，无以成江海。', author: '荀子《劝学》' },
+            { text: '锲而舍之，朽木不折；锲而不舍，金石可镂。', author: '荀子《劝学》' },
+            { text: '业精于勤，荒于嬉；行成于思，毁于随。', author: '韩愈《进学解》' },
+            { text: '古之立大事者，不惟有超世之才，亦必有坚忍不拔之志。', author: '苏轼《晁错论》' },
+            { text: '纸上得来终觉浅，绝知此事要躬行。', author: '陆游《冬夜读书示子聿》' },
+            { text: '千里之行，始于足下。', author: '老子《道德经》' },
+            { text: '合抱之木，生于毫末；九层之台，起于累土。', author: '老子《道德经》' },
+            { text: '天行健，君子以自强不息。', author: '《周易》' },
+            { text: '知行合一，动静等观。', author: '王阳明' },
+            { text: '苟日新，日日新，又日新。', author: '《礼记·大学》' },
+            { text: '博观而约取，厚积而薄发。', author: '苏轼' },
+            { text: '非淡泊无以明志，非宁静无以致远。', author: '诸葛亮《诫子书》' },
+            { text: '长风破浪会有时，直挂云帆济沧海。', author: '李白《行路难》' },
+            { text: '会当凌绝顶，一览众山小。', author: '杜甫《望岳》' },
+            { text: '衣带渐宽终不悔，为伊消得人憔悴。', author: '柳永《蝶恋花》' },
+            { text: '莫愁前路无知己，天下谁人不识君。', author: '高适《别董大》' },
+            { text: '不以物喜，不以己悲。', author: '范仲淹《岳阳楼记》' },
+            { text: '先天下之忧而忧，后天下之乐而乐。', author: '范仲淹《岳阳楼记》' },
+            { text: '业者有其成，学者有其成，己者有其成。', author: '《荀子·修身》' },
+            { text: 'Stay hungry, stay foolish.', author: 'Steve Jobs' },
+            { text: 'The best way to predict the future is to invent it.', author: 'Alan Kay' },
+            { text: 'Simplicity is the ultimate sophistication.', author: 'Leonardo da Vinci' },
+            { text: 'What we do now echoes in eternity.', author: 'Marcus Aurelius' },
+            { text: 'It is not that we have little time, but more that we waste a lot of it.', author: 'Seneca' },
+            { text: 'Well begun is half done.', author: 'Aristotle' },
+            { text: 'Knowing yourself is the beginning of all wisdom.', author: 'Aristotle' },
+            { text: 'The only way to do great work is to love what you do.', author: 'Steve Jobs' },
+            { text: 'Do not go where the path may lead, go instead where there is no path and leave a trail.', author: 'Ralph Waldo Emerson' }
+        ];
+
+        let quoteSettings = { custom: [], showOnHero: true };
+        let quoteOfTheDay = null;
+
+        function loadQuoteSettings() {
+            try {
+                const raw = localStorage.getItem('quoteSettings');
+                if (!raw) return;
+                const parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === 'object') {
+                    quoteSettings = {
+                        custom: Array.isArray(parsed.custom) ? parsed.custom.filter(q => q && q.text) : [],
+                        showOnHero: parsed.showOnHero !== false
+                    };
+                }
+            } catch (error) {
+                quoteSettings = { custom: [], showOnHero: true };
+            }
+        }
+
+        function saveQuoteSettings() {
+            try {
+                localStorage.setItem('quoteSettings', JSON.stringify(quoteSettings));
+            } catch (error) { /* 忽略 */ }
+        }
+
+        function getAllQuotes() {
+            return QUOTE_LIBRARY.concat(quoteSettings.custom);
+        }
+
+        // 每天按日期确定性选取，同一天永远同一句
+        function pickDailyQuote() {
+            const all = getAllQuotes();
+            if (!all.length) return null;
+            const key = formatDateKey(new Date());
+            let seed = 0;
+            for (let i = 0; i < key.length; i++) seed = (seed * 31 + key.charCodeAt(i)) >>> 0;
+            return all[seed % all.length];
+        }
+
+        function renderQuote() {
+            const host = document.getElementById('quote-strip');
+            if (!host) return;
+            if (!quoteSettings.showOnHero) {
+                host.classList.add('hidden');
+                return;
+            }
+            host.classList.remove('hidden');
+            const quote = quoteOfTheDay || pickDailyQuote();
+            if (!quote) {
+                host.innerHTML = '';
+                return;
+            }
+            quoteOfTheDay = quote;
+            host.innerHTML =
+                '<span class="quote-strip__mark">“</span>' +
+                '<div class="quote-strip__text">' + escapeHtml(quote.text) +
+                    '<span class="quote-strip__author">—— ' + escapeHtml(quote.author || '') + '</span>' +
+                '</div>' +
+                '<button type="button" class="quote-strip__btn" id="quote-next" title="换一句" aria-label="换一句">🔄</button>';
+            document.getElementById('quote-next')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const all = getAllQuotes();
+                if (!all.length) return;
+                let idx = all.indexOf(quoteOfTheDay);
+                quoteOfTheDay = all[(idx + 1) % all.length];
+                renderQuote();
+            });
+        }
+
+        // ---------- 名言自定义 ----------
+        function initQuotePanel() {
+            const countEl = document.getElementById('quote-library-count');
+            if (countEl) countEl.textContent = '内置 ' + QUOTE_LIBRARY.length + ' 条，可添加自己的名言。';
+
+            const toggle = document.getElementById('quote-toggle');
+            if (toggle) {
+                toggle.checked = quoteSettings.showOnHero;
+                toggle.addEventListener('change', () => {
+                    quoteSettings.showOnHero = toggle.checked;
+                    saveQuoteSettings();
+                    renderQuote();
+                });
+            }
+
+            document.getElementById('quote-add')?.addEventListener('click', addCustomQuote);
+            document.getElementById('quote-manage')?.addEventListener('click', () => {
+                const list = document.getElementById('quote-custom-list');
+                if (!list) return;
+                list.classList.toggle('hidden');
+                if (!list.classList.contains('hidden')) renderCustomQuoteList();
+            });
+
+            renderCustomQuoteList();
+        }
+
+        function addCustomQuote() {
+            const textInput = document.getElementById('quote-text-input');
+            const authorInput = document.getElementById('quote-author-input');
+            const text = (textInput?.value || '').trim();
+            if (!text) {
+                showToast('请输入名言内容');
+                return;
+            }
+            const author = (authorInput?.value || '').trim() || '自定义';
+            quoteSettings.custom.push({ text, author });
+            saveQuoteSettings();
+            if (textInput) textInput.value = '';
+            if (authorInput) authorInput.value = '';
+            quoteOfTheDay = pickDailyQuote();
+            renderQuote();
+            renderCustomQuoteList();
+            showToast('已添加名言');
+        }
+
+        function renderCustomQuoteList() {
+            const list = document.getElementById('quote-custom-list');
+            if (!list) return;
+            if (!quoteSettings.custom.length) {
+                list.innerHTML = '<div class="text-xs text-gray-400">还没有自定义名言</div>';
+                return;
+            }
+            list.innerHTML = quoteSettings.custom.map((q, i) =>
+                '<div class="flex items-center justify-between gap-2 px-3 py-2 bg-white border border-gray-200 rounded-lg">' +
+                    '<span class="text-xs text-gray-700 truncate">' + escapeHtml(q.text) +
+                        (q.author ? '<span class="text-gray-400"> —— ' + escapeHtml(q.author) + '</span>' : '') + '</span>' +
+                    '<button type="button" class="text-gray-400 hover:text-red-500 text-sm shrink-0" data-quote-del="' + i + '" title="删除">×</button>' +
+                '</div>'
+            ).join('');
+            list.querySelectorAll('[data-quote-del]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = Number(btn.getAttribute('data-quote-del'));
+                    quoteSettings.custom.splice(idx, 1);
+                    saveQuoteSettings();
+                    quoteOfTheDay = pickDailyQuote();
+                    renderQuote();
+                    renderCustomQuoteList();
+                });
+            });
+        }
+
+        // ---------- 仪式状态（按天记录，避免重复打扰） ----------
+        let ritualState = { welcomedOn: '', offworkDoneOn: '', weekShownOn: '' };
+
+        function loadRitualState() {
+            try {
+                const raw = localStorage.getItem('ritualState');
+                if (!raw) return;
+                const parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === 'object') {
+                    ritualState = {
+                        welcomedOn: parsed.welcomedOn || '',
+                        offworkDoneOn: parsed.offworkDoneOn || '',
+                        weekShownOn: parsed.weekShownOn || ''
+                    };
+                }
+            } catch (error) {
+                ritualState = { welcomedOn: '', offworkDoneOn: '', weekShownOn: '' };
+            }
+        }
+
+        function saveRitualState() {
+            try {
+                localStorage.setItem('ritualState', JSON.stringify(ritualState));
+            } catch (error) { /* 忽略 */ }
+        }
+
+        // ---------- 每日欢迎仪式 ----------
+        function initWelcomeRitual() {
+            const today = formatDateKey(new Date());
+            if (ritualState.welcomedOn === today) return;
+            if (!prefersReducedMotion() && ritualState.welcomedOn) return; // 换设备时不再重复
+
+            const layer = document.getElementById('welcome-ritual');
+            if (!layer) return;
+
+            const bg = profileData.backgroundImage || getDefaultThemeBackground();
+            const shot = layer.querySelector('.welcome-shot');
+            if (shot && bg) shot.style.backgroundImage = "url('" + bg + "')";
+
+            layer.classList.remove('hidden');
+            ritualState.welcomedOn = today;
+            saveRitualState();
+
+            const reveal = () => {
+                if (layer.dataset.revealed) return;
+                layer.dataset.revealed = '1';
+                renderWelcomeCard(layer);
+            };
+            layer.addEventListener('click', reveal, { once: false });
+            const btn = layer.querySelector('#welcome-enter');
+            if (btn) btn.addEventListener('click', (e) => { e.stopPropagation(); reveal(); });
+        }
+
+        function renderWelcomeCard(layer) {
+            const hour = new Date().getHours();
+            const name = profileData.name && profileData.name !== '姓名' ? profileData.name : '';
+            let greet;
+            if (hour < 5) greet = '夜深了';
+            else if (hour < 11) greet = '早上好';
+            else if (hour < 13) greet = '中午好';
+            else if (hour < 18) greet = '下午好';
+            else greet = '晚上好';
+
+            const today = getTodayString();
+            const todayMinutes = (((workData.records || {})[today]?.workSessions) || [])
+                .reduce((s, x) => s + (x.duration || 0), 0);
+            const pendingCount = (todoData.pending || []).length;
+            const streak = computeWorkStreak();
+
+            const quote = quoteOfTheDay || pickDailyQuote();
+            const quoteHtml = quote
+                ? '<div class="welcome-card__quote">' + escapeHtml(quote.text) +
+                    '<cite>—— ' + escapeHtml(quote.author || '') + '</cite></div>'
+                : '';
+
+            // 重建 DOM 时保留主题背景（.welcome-shot 的背景图在初始化时设置过）
+            const bg = profileData.backgroundImage || getDefaultThemeBackground();
+            layer.innerHTML =
+                '<div class="welcome-shot"' + (bg ? " style=\"background-image:url('" + bg + "')\"" : '') + '></div>' +
+                '<div class="welcome-card">' +
+                    '<div class="welcome-card__glow"></div>' +
+                    '<div class="welcome-card__greet">' + escapeHtml(greet) + (name ? '，' + escapeHtml(name) : '') + '</div>' +
+                    '<div class="welcome-card__date">' + escapeHtml(new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })) + '</div>' +
+                    quoteHtml +
+                    '<div class="welcome-card__stats">' +
+                        '<div class="welcome-card__stat"><b>' + (todayMinutes ? formatMinutesHM(todayMinutes) : '0') + '</b><span>今日专注</span></div>' +
+                        '<div class="welcome-card__stat"><b>' + streak.current + '</b><span>连续天数</span></div>' +
+                        '<div class="welcome-card__stat"><b>' + pendingCount + '</b><span>待办</span></div>' +
+                    '</div>' +
+                    '<button type="button" id="welcome-enter" class="btn btn--md btn--primary mt-5 w-full">开始今天</button>' +
+                '</div>';
+
+            const enter = document.getElementById('welcome-enter');
+            if (enter) {
+                enter.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    dismissWelcome();
+                });
+            }
+        }
+
+        function dismissWelcome() {
+            const layer = document.getElementById('welcome-ritual');
+            if (!layer) return;
+            layer.classList.add('is-closing');
+            setTimeout(() => {
+                layer.classList.add('hidden');
+                layer.classList.remove('is-closing');
+                layer.innerHTML = '';
+            }, 620);
+        }
+
+        // ---------- 下班仪式 ----------
+        function getTodayWorkMinutes() {
+            const today = formatDateKey(new Date());
+            return (((workData.records || {})[today]?.workSessions) || [])
+                .reduce((s, x) => s + (x.duration || 0), 0);
+        }
+
+        // 每天 17:00 后提示下班
+        function checkOffworkRitual() {
+            const today = formatDateKey(new Date());
+            const now = new Date();
+            if (now.getHours() < 17) return;
+            if (ritualState.offworkDoneOn === today) return;
+            if (document.getElementById('offwork-panel')) return; // 已在显示
+            if (document.getElementById('welcome-ritual') && !document.getElementById('welcome-ritual').classList.contains('hidden')) return;
+
+            const workMinutes = getTodayWorkMinutes();
+            if (workMinutes < 30) return; // 今天几乎没开工，不打扰
+
+            showOffworkPanel();
+        }
+
+        function showOffworkPanel() {
+            const today = formatDateKey(new Date());
+            const workMinutes = getTodayWorkMinutes();
+            const restMinutes = (((workData.records || {})[today]?.restSessions) || [])
+                .reduce((s, x) => s + (x.duration || 0), 0);
+
+            const pending = (todoData.pending || []).slice(0, 6);
+            const doneCount = (todoData.completed || []).filter(t => {
+                return t.completedAt && String(t.completedAt).startsWith(today);
+            }).length;
+
+            const reflection = (reflectionData || {})[today] || {};
+            const reflectionFilled = ['progress', 'stuck', 'tomorrow']
+                .filter(k => String(reflection[k] || '').trim()).length;
+
+            const rows = [
+                { label: '今日专注', value: formatMinutesHM(workMinutes) },
+                { label: '休息', value: formatMinutesHM(restMinutes) },
+                { label: '完成待办', value: doneCount + ' 项' },
+                { label: '三问填写', value: reflectionFilled + ' / 3' }
+            ];
+
+            const todoHtml = pending.length
+                ? pending.map(t => '<div class="offwork-panel__todo">' + escapeHtml(t.text) + '</div>').join('')
+                : '<div class="offwork-panel__todo" style="color:var(--ok)">待办都清空了 👍</div>';
+
+            const panel = document.createElement('div');
+            panel.id = 'offwork-panel';
+            panel.className = 'offwork-panel';
+            panel.innerHTML =
+                '<div class="offwork-panel__head">' +
+                    '<div class="offwork-panel__title">🌆 该收工了</div>' +
+                    '<div class="offwork-panel__sub">今天的努力已经记下来了，看看还有哪些没做完</div>' +
+                '</div>' +
+                '<div class="offwork-panel__body">' +
+                    rows.map(r => '<div class="offwork-panel__row"><span>' + r.label + '</span><b>' + escapeHtml(r.value) + '</b></div>').join('') +
+                    (pending.length ? '<div class="offwork-panel__row" style="margin-top:.45rem"><span>还没完成</span><b>' + pending.length + ' 项</b></div>' : '') +
+                    todoHtml +
+                '</div>' +
+                '<div class="offwork-panel__foot">' +
+                    '<button type="button" id="offwork-dismiss" class="btn btn--sm btn--ghost flex-1">稍后再说</button>' +
+                    '<button type="button" id="offwork-confirm" class="btn btn--sm btn--primary flex-1">收工 🎉</button>' +
+                '</div>';
+
+            document.body.appendChild(panel);
+
+            document.getElementById('offwork-dismiss')?.addEventListener('click', () => {
+                panel.remove();
+            });
+            document.getElementById('offwork-confirm')?.addEventListener('click', () => {
+                panel.remove();
+                ritualState.offworkDoneOn = today;
+                saveRitualState();
+                showCelebrate();
+            });
+        }
+
+        // ---------- 下班庆祝 ----------
+        function showCelebrate() {
+            const layer = document.getElementById('celebrate-layer');
+            if (!layer) return;
+            const workMinutes = getTodayWorkMinutes();
+            const doneCount = (todoData.completed || []).length;
+            const streak = computeWorkStreak();
+
+            layer.innerHTML =
+                '<div class="celebrate-card">' +
+                    '<div class="celebrate-card__emoji">🎉</div>' +
+                    '<div class="celebrate-card__title">恭喜下班</div>' +
+                    '<div class="celebrate-card__sub">今天的事都记在这里了，剩下的交给明天。</div>' +
+                    '<div class="celebrate-card__stats">' +
+                        '<div class="celebrate-card__stat"><b>' + formatMinutesHM(workMinutes) + '</b><span>今日专注</span></div>' +
+                        '<div class="celebrate-card__stat"><b>' + doneCount + '</b><span>完成事项</span></div>' +
+                        '<div class="celebrate-card__stat"><b>' + streak.current + '</b><span>连续天数</span></div>' +
+                    '</div>' +
+                    '<button type="button" id="celebrate-close" class="btn btn--md btn--primary mt-5 w-full">好的，去休息</button>' +
+                '</div>';
+
+            layer.classList.remove('hidden');
+            launchConfetti();
+
+            const close = () => {
+                layer.classList.add('hidden');
+                layer.innerHTML = '';
+            };
+            document.getElementById('celebrate-close')?.addEventListener('click', close);
+        }
+
+        function launchConfetti() {
+            const layer = document.getElementById('celebrate-layer');
+            if (!layer) return;
+            const colors = ['#f59e0b', '#ef4444', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#facc15'];
+            const count = prefersReducedMotion() ? 0 : 46;
+            for (let i = 0; i < count; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDuration = (1.9 + Math.random() * 1.5) + 's';
+                piece.style.animationDelay = (Math.random() * 0.5) + 's';
+                piece.style.opacity = String(0.65 + Math.random() * 0.35);
+                layer.appendChild(piece);
+                setTimeout(() => piece.remove(), 4000);
+            }
+        }
+
+        // ---------- 上班时的周打卡进度 ----------
+        function getWeekProgress() {
+            const now = new Date();
+            // 周一为一周之始
+            const dayOfWeek = (now.getDay() + 6) % 7;
+            const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayOfWeek);
+
+            const days = [];
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i);
+                const key = formatDateKey(d);
+                const sessions = (workData.records || {})[key]?.workSessions || [];
+                const minutes = sessions.reduce((s, x) => s + (x.duration || 0), 0);
+                days.push({
+                    key,
+                    label: ['一', '二', '三', '四', '五', '六', '日'][i],
+                    minutes,
+                    worked: minutes > 0,
+                    isToday: key === formatDateKey(now),
+                    isFuture: d > now
+                });
+            }
+            return days;
+        }
+
+        function showWeekProgressOnStart() {
+            const today = formatDateKey(new Date());
+            if (ritualState.weekShownOn === today) return;
+
+            const days = getWeekProgress();
+            const workedDays = days.filter(d => d.worked);
+            const weekMinutes = workedDays.reduce((s, d) => s + d.minutes, 0);
+
+            const strip = days.map(d => {
+                const cls = 'week-day' + (d.worked ? ' is-on' : '') + (d.isToday ? ' is-today' : '');
+                return '<div class="' + cls + '">' +
+                    '<div class="week-day__dot">' + (d.worked ? '✓' : (d.isFuture ? '' : '·')) + '</div>' +
+                    '<div class="week-day__label">' + d.label + '</div>' +
+                '</div>';
+            }).join('');
+
+            // 周五打卡完成 → 庆祝
+            const friday = days[4];
+            const banner = (friday && friday.worked)
+                ? '<div class="week-banner">🎉 走到周五了 —— 再坚持一天，happy weekend！</div>'
+                : '';
+
+            const modal = document.getElementById('week-progress-modal');
+            if (!modal) return;
+            modal.innerHTML =
+                '<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 text-center">' +
+                    '<div class="text-lg font-bold text-gray-800">本周打卡</div>' +
+                    '<p class="text-xs text-gray-500 mt-1 mb-1">上班一天，点亮一格</p>' +
+                    '<div class="week-strip">' + strip + '</div>' +
+                    banner +
+                    '<div class="mt-4 flex items-center justify-center gap-4 text-xs text-gray-500">' +
+                        '<span>已打卡 <b class="text-gray-800">' + workedDays.length + '</b> 天</span>' +
+                        '<span>本周专注 <b class="text-gray-800">' + formatMinutesHM(weekMinutes) + '</b></span>' +
+                    '</div>' +
+                    '<button type="button" id="week-progress-close" class="btn btn--md btn--primary mt-5 w-full">开始工作</button>' +
+                '</div>';
+
+            openModalEl('week-progress-modal');
+            ritualState.weekShownOn = today;
+            saveRitualState();
+
+            document.getElementById('week-progress-close')?.addEventListener('click', () => {
+                closeModalEl('week-progress-modal');
+            });
+        }
+
+        function initRituals() {
+            loadRitualState();
+            loadQuoteSettings();
+            quoteOfTheDay = pickDailyQuote();
+            renderQuote();
+            initQuotePanel();
+
+            // 欢迎仪式延后一点，等页面布局稳定
+            setTimeout(initWelcomeRitual, 420);
+
+            // 下班检查：随提醒轮询一起跑
+            setTimeout(checkOffworkRitual, 1500);
+        }
 
         // ============================================================
         // P2 键盘与效率：快捷键 / 待办搜索 / 优先级 / 筛选 / 拖拽排序
@@ -6872,6 +7870,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
         }
 
         function checkReminders() {
+            try { checkOffworkRitual(); } catch (error) { /* 不阻断提醒 */ }
+
             if (!reminderData.enabled) return;
 
             const now = new Date();
