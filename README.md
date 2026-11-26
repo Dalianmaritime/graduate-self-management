@@ -450,6 +450,9 @@ python3 -m http.server 8000
   `background-color`、`padding` 等）与 `<style>` 标签，因此本页的手绘元素
   （手写体、便签、下划线）全部做进 `docs/handwriting/` 下的 SVG，
   README 只用 `<img>` 引用 —— SVG 内部不受影响
+- **手写元素不依赖系统字体**：原本用 `font-family="Hannotate SC"`（macOS 自带），
+  别的平台没有会回退成普通字体。现已用 `tools/svg-text2path/` 把文字
+  转成轮廓路径，**任何系统上渲染完全一致**
 
 </details>
 
@@ -472,7 +475,8 @@ python3 -m http.server 8000
 │   ├── verify-v5.js            # 32 项新功能验证
 │   ├── verify-ritual.js        # 31 项仪式感验证
 │   ├── verify-timezone.js      # 10 项时区验证
-│   └── tailwind/               # Tailwind 构建期产物：config + build.sh + 说明
+│   ├── tailwind/               # Tailwind 构建期产物：config + build.sh + 说明
+│   └── svg-text2path/          # SVG 文字转路径：消除对系统字体的依赖
 ├── UPSTREAM.md                 # 二次开发溯源：上游、基线、改动清单
 ├── LICENSE
 └── README.md
