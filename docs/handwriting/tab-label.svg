@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 40" width="190" height="40" fill="none">
+  <path d="M3.5 9c0-2.8 2.2-5 5-5h173c2.8 0 5 2.2 5 5v22c0 2.8-2.2 5-5 5h-173c-2.8 0-5-2.2-5-5Z" fill="#fff" stroke="#d1d9e0" stroke-width="1.4"/>
+  <path d="M8.5 4h173c2.8 0 5 2.2 5 5v4.5h-183V9c0-2.8 2.2-5 5-5Z" fill="#f6f8fa"/>
+  <text x="95" y="30" font-family="'Bradley Hand','Segoe Script','Chalkboard SE',cursive" font-size="15" fill="#6b7280" text-anchor="middle">一天的记录</text>
+</svg>
