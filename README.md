@@ -367,7 +367,8 @@ python3 -m http.server 8000
 │   ├── smoke.js                # 17 项交互冒烟测试（headless Chrome + CDP）
 │   ├── verify-stats.js         # 统计口径回归：独立复算三区间并比对页面
 │   ├── verify-v5.js            # 32 项新功能验证（成就/连续/目标/快捷键/筛选/目标线）
-│   └── verify-ritual.js        # 30 项仪式感验证（欢迎/名言/周打卡/下班庆祝）
+│   ├── verify-ritual.js        # 31 项仪式感验证（欢迎/名言/周打卡/下班庆祝）
+│   └── verify-timezone.js      # 10 项时区验证（模拟凌晨时刻，检查日期键一致性）
 ├── LICENSE
 ├── UPSTREAM.md                 # 二次开发溯源说明：上游、基线、改动清单
 └── README.md
@@ -389,8 +390,11 @@ node tools/verify-stats.js
 # 新功能验证：32 项
 node tools/verify-v5.js
 
-# 仪式感验证：30 项
+# 仪式感验证：31 项
 node tools/verify-ritual.js
+
+# 时区验证：10 项
+node tools/verify-timezone.js
 ```
 
 **`smoke.js`** 覆盖心情切换、待办勾选动画、弹窗开合、Toast、命令面板执行与跳转、
@@ -406,6 +410,10 @@ node tools/verify-ritual.js
 **`verify-ritual.js`** 覆盖四个仪式的完整流程：欢迎层背景图与卡片内容、
 名言确定性与自定义增删、周打卡格子点亮与每日去重、下班面板与庆祝彩纸、
 下班状态记录。
+
+**`verify-timezone.js`** 用 mock 时间把页面「拨」到本地 00:30 / 03:00 / 07:59 /
+08:00 / 23:00 五个时刻，检查日期键始终取系统本地时区，并验证凌晨记下的
+工作时段能被当天的统计区间查到。
 
 两个脚本都自己起本地静态服务与无头 Chrome，**不需要手动准备环境**，
 唯一外部依赖是本机装了 Chrome 或 Chromium。
@@ -426,6 +434,7 @@ node tools/verify-ritual.js
 | 导入是整库覆盖 | 不做增量合并，导入前需先导出 |
 | 统计区间不连续 | 「本周」取最近 7 天，「近 30 天」取最近 30 天，「本年」按自然月滚动 12 个月 |
 | 文件体积偏大 | 新增仪式感后约 4.11 MB，其中内嵌背景图仍占约 2.2 MB |
+| 历史凌晨记录 | 修复前 00:00–08:00 记的记录存在前一天键下，现仍在原处，不会自动迁回 |
 
 ---
 

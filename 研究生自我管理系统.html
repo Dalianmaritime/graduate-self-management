@@ -3106,8 +3106,11 @@ Check your Browserslist config to be sure that your targets are set up correctly
             document.getElementById('current-date-time').textContent = now.toLocaleDateString('zh-CN', options);
         }
 
+        // 今天的日期键：使用系统本地时区
+        // 早前用 toISOString()（UTC），在东八区 00:00–08:00 会返回昨天，
+        // 导致「刚记的记录在当天统计里查不到」——统计侧一直用本地日期键，两边必须一致
         function getTodayString() {
-            return new Date().toISOString().split('T')[0];
+            return formatDateKey(new Date());
         }
 
         function getCurrentTimeString() {
