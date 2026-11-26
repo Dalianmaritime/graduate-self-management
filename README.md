@@ -3,17 +3,8 @@
 <br>
 
 <p align="center">
-  <img src="docs/handwriting/underline-wave.svg" width="220" alt="">
+  <img src="docs/handwriting/opening-line.svg" width="680" alt="读研的日子过得很快，快到一恍惚一周就没了；忙到晚上躺下，想不起今天到底推进了什么。">
 </p>
-
-<p align="center">
-  <em style="font-size:20px; line-height:1.75; color:#4b5563;">
-  读研的日子过得很快。快到一恍惚，一周就没了；<br>
-  忙到晚上躺下，想不起今天到底推进了什么。
-  </em>
-</p>
-
-<br>
 
 <p align="center">
   组会要汇报、周报要交、导师问「这周做了什么」——<br>
@@ -26,8 +17,8 @@
   <strong>这个工具不让你更努力。它只做一件事：让你做过的事留得下来。</strong>
 </p>
 
-<p align="center" style="margin-top:-10px; margin-bottom:0;">
-  <img src="docs/handwriting/underline-short.svg" width="92" alt="">
+<p align="center">
+  <img src="docs/handwriting/underline-promise.svg" width="180" alt="">
 </p>
 
 <br>
@@ -95,8 +86,8 @@
 
 ## 一天里的四个时刻
 
-<p align="left" style="margin-top:-14px; margin-bottom:14px;">
-  <img src="docs/handwriting/underline-short.svg" width="104" alt="">
+<p align="left">
+  <img src="docs/handwriting/underline-heading.svg" width="150" alt="">
 </p>
 
 大多数记录工具的流程是：**打开 → 记 → 关上**。
@@ -270,22 +261,13 @@
 
 <table>
 <tr>
-<td width="330" align="center" style="border:0; padding:0;">
-  <table>
-  <tr>
-  <td style="border:0; padding:0; background:#fdf6d8;">
-    <p style="margin:0; padding:18px 20px 16px 20px; font-family:'Hannotate SC','HanziPen SC','Kaiti SC','STKaiti','Xingkai SC','Bradley Hand','Segoe Script','Chalkboard SE',cursive; font-size:17px; line-height:1.85; color:#6b5a2e; text-align:left;">
-      记住的是<b>做过的事</b>，<br>
-      不是「够不够努力」。<br><br>
-      <span style="font-size:12px; color:#a1906a;">—— 写在页边</span>
-    </p>
-  </td>
-  </tr>
-  </table>
+<td width="330" align="center">
+  <img src="docs/handwriting/note-sticky.svg" width="310" alt="便签：记住的是做过的事，不是「够不够努力」。—— 写在页边">
 </td>
-<td width="26" style="border:0;"></td>
-<td valign="middle" style="border:0; padding:0;">
-  <p style="margin:0; font-size:13px; color:#6b7280; line-height:1.7;">
+<td width="26">
+</td>
+<td valign="middle">
+  <p>
     所以它只负责把发生过的事<strong>原样记下来</strong> ——<br>
     该清楚的，是你自己看完之后自然清楚的。
   </p>

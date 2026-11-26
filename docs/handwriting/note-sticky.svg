@@ -1,5 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 200" width="260" height="200" fill="none">
-  <path d="M8 10h244v186l-30-26H8Z" fill="#fdf6d8"/>
-  <path d="M8 10h244v186l-30-26H8Z" stroke="#e8d9a0" stroke-width="1.5"/>
-  <path d="M8 10h244v16H8Z" fill="#f5e6a8" opacity=".55"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 190" width="320" height="190">
+  <defs>
+    <filter id="sh" x="-8%" y="-8%" width="116%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#b45309" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+  <path d="M6 8h300l8 8v158a10 10 0 0 1-10 10H16A10 10 0 0 1 6 174Z" fill="#fdf6d8" filter="url(#sh)"/>
+  <path d="M6 8h300l8 8v158a10 10 0 0 1-10 10H16A10 10 0 0 1 6 174Z" fill="none" stroke="#e8d9a0" stroke-width="1.2"/>
+  <path d="M6 8h300l8 8v14H6Z" fill="#f3e3ac" opacity=".7"/>
+  <text x="26" y="62" font-family="Hannotate SC, HanziPen SC, Kaiti SC, STKaiti, cursive" font-size="21" fill="#6b5a2e">记住的是<tspan font-weight="700">做过的事</tspan>，</text>
+  <text x="26" y="94" font-family="Hannotate SC, HanziPen SC, Kaiti SC, STKaiti, cursive" font-size="21" fill="#6b5a2e">不是「够不够努力」。</text>
+  <text x="26" y="146" font-family="Hannotate SC, HanziPen SC, Kaiti SC, STKaiti, cursive" font-size="14" fill="#a1906a">—— 写在页边</text>
 </svg>

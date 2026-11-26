@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 150" width="720" height="150">
+  <text x="360" y="34" text-anchor="middle" font-family="Hannotate SC, HanziPen SC, Kaiti SC, STKaiti, cursive" font-size="25" fill="#4b5563">读研的日子过得很快。快到一恍惚，一周就没了；</text>
+  <text x="360" y="76" text-anchor="middle" font-family="Hannotate SC, HanziPen SC, Kaiti SC, STKaiti, cursive" font-size="25" fill="#4b5563">忙到晚上躺下，想不起今天到底推进了什么。</text>
+  <path d="M150 96c60-7 120 5 180 1s120-9 180-4 90 8 120 5" stroke="#e8734a" stroke-width="3" stroke-linecap="round" fill="none" opacity=".88"/>
+  <path d="M160 100c55-5 115 4 172 1s115-8 172-3 85 7 112 4" stroke="#f2a07b" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".55"/>
+</svg>
