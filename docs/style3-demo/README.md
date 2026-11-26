@@ -12,16 +12,40 @@ python3 -m http.server 8000
 
 ## 为什么手写风在 GitHub 上很难做
 
-GitHub 的 README 渲染环境有三处限制：
+**实测结论（2026-11）**：GitHub README 的 HTML sanitizer 只保留极少数 `style` 属性
+——`vertical-align`、`max-width`、`width`、`min-width`、`display` 等。
 
-| 限制 | 影响 |
+被剥离的包括：
+
+| 被剥离 | 后果 |
 |---|---|
-| **剥离 `<style>` 标签** | 不能写自定义 CSS，只能用内联 `style` 属性 |
-| **给所有 `<table>` 加边框** | 布局用的表格会留下外框，得逐格写 `border:0` 绕过 |
-| **图片加边框与圆角** | SVG 装饰需要自己处理边界 |
+| `font-family` | 手写字体失效，中文回退成斜体 |
+| `background-color` | 便签底色、卡片底色失效 |
+| `color` | 强调色失效 |
+| `padding` / `border` | 内边距与描边失效，元素挤在一起 |
+| `text-align` | 对齐失效 |
 
-所以这个风格靠「手绘 SVG 素材 + 表格嵌套 + 内联样式」实现，
-素材在 `docs/handwriting/`（12 个 SVG，全部手绘路径）。
+同时 GitHub 还会**剥离 `<style>` 标签**，并给所有 `<table>` 加边框。
+
+### 因此：视觉必须做进 SVG
+
+这是本项目摸索出的唯一可行路径 —— **所有视觉效果画进 SVG 文件，README 只用 `<img>` 引用**。
+SVG 内部不受 sanitizer 影响，字体、底色、投影、撕角全部保留。
+
+`docs/handwriting/` 下的 SVG 就是这样做的：
+
+- 文字用 `<text font-family="Hannotate SC, ...">`（macOS 自带中文手写体）
+- 底色、撕角、投影用 `<path>` / `<filter>`
+- README 里只有一行 `<img src="docs/handwriting/xxx.svg">`
+
+> 注意：`Bradley Hand`、`Chalkboard`、`Brush Script` 这些拉丁手写字体**没有中文字形**，
+> 中文会回退并被渲染成斜体。中文手写要用 `Hannotate SC` / `HanziPen SC` /
+> `Kaiti SC` / `STKaiti` / `Xingkai SC`。
+
+### 本 demo 的局限
+
+demo 里的双栏布局、便签、虚线卡片用了内联 `style`，**这些在真实 GitHub 上会被剥离**。
+它展示的是设计意图，不是最终效果。仓库当前 README 已改用 SVG 承载，可以直接看线上效果。
 
 ## 相对当前风格的取舍
 

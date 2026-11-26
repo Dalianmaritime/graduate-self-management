@@ -446,6 +446,10 @@ python3 -m http.server 8000
 - **日期键用本地时区**：`getTodayString()` 早前用 UTC，东八区凌晨 8 小时内会返回前一天
 - **统计诚实性**：心情 × 效率关联在样本量 < 5 时不输出任何结论
 - **可访问性**：`prefers-reduced-motion` 时全部动效降级为瞬时
+- **README 的视觉约束**：GitHub 会剥离大部分内联 `style` 属性（`font-family`、
+  `background-color`、`padding` 等）与 `<style>` 标签，因此本页的手绘元素
+  （手写体、便签、下划线）全部做进 `docs/handwriting/` 下的 SVG，
+  README 只用 `<img>` 引用 —— SVG 内部不受影响
 
 </details>
 
