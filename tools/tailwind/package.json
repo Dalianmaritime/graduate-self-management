@@ -1,0 +1,12 @@
+{
+  "name": "gssm-tailwind-build",
+  "version": "1.0.0",
+  "private": true,
+  "description": "构建研究生自我管理系统的 Tailwind 构建期 CSS",
+  "scripts": {
+    "build": "./build.sh"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}

@@ -14,3 +14,12 @@ gssm-local-data*.json
 
 # 临时截图输出
 /tmp/
+
+# Tailwind 构建依赖
+tools/tailwind/node_modules/
+tools/tailwind/content.html
+tools/tailwind/tailwind.build.config.js
+tools/tailwind/out*.css
+
+# 临时对比截图
+docs/screenshots/tw_*.png
